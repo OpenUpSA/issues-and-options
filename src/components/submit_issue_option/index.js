@@ -18,6 +18,7 @@ export class FinalComponent extends React.Component {
   };
 
   render() {
+    const { personAffected, issuesAffected } = this.props.values;
     const contact = {
       'Local home affairs service point': 'custom component',
       'National Department of Home Affairs': 'custom component',
@@ -81,14 +82,14 @@ export class FinalComponent extends React.Component {
                     <Button
                       variant="outlined"
                     >
-                      Just me
+                      {personAffected}
                     </Button>
                   </Box>
                   <Box mr={3}>
                     <Button
                       variant="outlined"
                     >
-                      Travel and identity documents
+                      {issuesAffected}
                     </Button>
                   </Box>
                 </Box>
@@ -103,7 +104,6 @@ export class FinalComponent extends React.Component {
                     <a href="/">Why is it important to escalate in this order?</a>
                   </Grid>
                 </Grid>
-
                 <div>
                   {Object.entries(contact).map(([key, value]) => (
                     <Accordion>
@@ -123,14 +123,6 @@ export class FinalComponent extends React.Component {
                       </AccordionDetails>
                     </Accordion>
                   ))}
-                </div>
-                <div>
-                  <button>Show me more areas</button>
-                  <button>I don't see an appropriate area here</button>
-                  <button>I'm not sure</button>
-                </div>
-                <div>
-                  <a href="/">Why are we asking this question?</a>
                 </div>
               </Box>
             </div>

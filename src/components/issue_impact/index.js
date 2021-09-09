@@ -14,6 +14,11 @@ export class IssueImpact extends React.Component {
     this.props.prevStep();
   };
 
+  selectedOption = (option) => {
+    this.props.values.issuesAffected = option;
+    this.props.nextStep();
+  };
+
   render() {
     const issues = Object.keys(data.issues);
     return (
@@ -70,9 +75,9 @@ export class IssueImpact extends React.Component {
                       <Button
                         variant="contained"
                         color="secondary"
-                        onClick={this.continue}>{issue}
+                        onClick={() => this.selectedOption(issue)}>{issue}
                       </Button>
-                      </Box>
+                    </Box>
                   ))}
                 </Box>
               </div>

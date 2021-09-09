@@ -7,25 +7,27 @@ import { FinalComponent } from '../submit_issue_option';
 export default class IssuesAndOptions extends Component {
   state = {
     step: 1,
-    justMe: false,
-    allSouthAfricans: false,
-    areaSlected: []
+    personAffected: null,
+    issuesAffected: null,
   }
+
   // go back to previous step
   prevStep = () => {
     const { step } = this.state;
     this.setState({ step: step - 1 });
   }
+
   // proceed to the next step
-  nextStep = (payload) => {
+  nextStep = () => {
     const { step } = this.state;
     this.setState({ step: step + 1 });
-    console.log({ payload });
   }
+
   // handle field change
   handleChange = input => e => {
     this.setState({ [input]: e.target.value });
   }
+
   render() {
     const { step } = this.state;
     switch (step) {
@@ -33,7 +35,7 @@ export default class IssuesAndOptions extends Component {
         return (
           <Intro
             nextStep={this.nextStep}
-            values=""
+            values={this.state}
           />
         );
       case 2:
@@ -42,7 +44,7 @@ export default class IssuesAndOptions extends Component {
             nextStep={this.nextStep}
             prevStep={this.prevStep}
             handleChange={this.handleChange}
-            values=""
+            values={this.state}
           />
         );
       case 3:
@@ -50,20 +52,18 @@ export default class IssuesAndOptions extends Component {
           <IssueImpact
             nextStep={this.nextStep}
             prevStep={this.prevStep}
-            values=""
+            values={this.state}
           />
         );
       case 4:
         return <FinalComponent
           prevStep={this.prevStep}
+          values={this.state}
         />;
       default:
-        (console.log('This is a multi-step form built with React.'))
+        (
+          console.log('This is a multi-step form built with React.')
+        );
     }
-    return (
-      <div>
-        Success hello world
-      </div>
-    )
   }
 }

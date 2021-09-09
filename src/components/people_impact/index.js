@@ -4,14 +4,15 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 
 export class PeopleImpact extends React.Component {
-  continue = e => {
-    e.preventDefault();
-    this.props.nextStep();
-  };
 
   back = e => {
     e.preventDefault();
     this.props.prevStep();
+  };
+
+  selectedOption = (option) => {
+    this.props.values.personAffected = option;
+    this.props.nextStep();
   };
 
   render() {
@@ -59,10 +60,10 @@ export class PeopleImpact extends React.Component {
                 alignItems="flex-start"
               >
                 <Box mr={3}>
-                  <Button variant="contained" color="secondary" onClick={this.continue}>Just me</Button>
+                  <Button variant="contained" color="secondary" onClick={() => this.selectedOption('just me')}>Just me</Button>
                 </Box>
                 <Box>
-                  <Button variant="contained" color="secondary">All South Africans</Button>
+                  <Button variant="contained" color="secondary" onClick={() => this.selectedOption('all southafricans')}>All South Africans</Button>
                 </Box>
               </Box>
               <div>
