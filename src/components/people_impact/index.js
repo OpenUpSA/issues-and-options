@@ -40,6 +40,7 @@ export class PeopleImpact extends React.Component {
               <Box mb={1}>
                 <Button
                   variant="outlined"
+                  color="primary"
                   onClick={this.back}
                 >
                   <ArrowBackIcon /> Back

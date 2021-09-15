@@ -1,12 +1,17 @@
-import React from 'react'
+import { Box, Button, Card, CardContent, Grid, Typography } from '@material-ui/core';
 import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { Box, Button, Grid, Typography } from '@material-ui/core';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
 import ArrowBack from '@material-ui/icons/ArrowBack';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import React from 'react';
+import data from '../../data/data.json';
 
 export class FinalComponent extends React.Component {
+  state = {
+    expanded: false
+  }
+
   continue = e => {
     e.preventDefault();
     this.props.nextStep();
@@ -17,16 +22,19 @@ export class FinalComponent extends React.Component {
     this.props.prevStep();
   };
 
+  handleChange = (panel) => (event, isExpanded) => {
+    event.preventDefault();
+    this.setState({ expanded: isExpanded ? panel : false });
+  };
+
   render() {
+    const { expanded } = this.state;
     const { personAffected, issuesAffected } = this.props.values;
-    const contact = {
-      'Local home affairs service point': 'custom component',
-      'National Department of Home Affairs': 'custom component',
-      'Your representative Members of parliament': 'custom component',
-      'Minister of Home Affairs': 'custom component',
-      'The National Assembly for Home Affairs': 'custom component',
-      'The NCOP committee': 'custom component'
-    }
+    const who = data[personAffected][issuesAffected]
+      ? data[personAffected][issuesAffected].sort(function (a, b) {
+        return parseInt(a['Priority']) - parseInt(b['Priority']);
+      })
+      : []
     return (
       <div>
         <Grid container
@@ -52,6 +60,7 @@ export class FinalComponent extends React.Component {
                 <Box mb={1}>
                   <Button
                     variant="outlined"
+                    color="primary"
                     onClick={this.back}
                   >
                     <ArrowBack /> Back
@@ -81,6 +90,7 @@ export class FinalComponent extends React.Component {
                   <Box mb={1} mr={3}>
                     <Button
                       variant="outlined"
+                      title="How many people does your issue affect?"
                     >
                       {personAffected}
                     </Button>
@@ -88,6 +98,7 @@ export class FinalComponent extends React.Component {
                   <Box mr={3}>
                     <Button
                       variant="outlined"
+                      title="Which area does your issue most closely relate to?"
                     >
                       {issuesAffected}
                     </Button>
@@ -105,21 +116,39 @@ export class FinalComponent extends React.Component {
                   </Grid>
                 </Grid>
                 <div>
-                  {Object.entries(contact).map(([key, value]) => (
-                    <Accordion>
+                  {who && who.map((key, i) => (
+                    <Accordion
+                      key={key['Priority']}
+                      expanded={expanded === i}
+                      onChange={this.handleChange(i)}
+                    >
                       <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1a-content"
                         id="panel1a-header"
                       >
                         <Typography>
-                          {key}
+                          {key['Who']}
                         </Typography>
                       </AccordionSummary>
                       <AccordionDetails>
-                        <Typography>
-                          {value}
-                        </Typography>
+                        <Box
+                          display="flex"
+                          alignItems="flex-start"
+                          flexDirection="column"
+                        >
+                          <Typography>
+                            {key['Why should they help?']}
+                          </Typography>
+                          <Box my={3}>
+                            <Card>
+                              <CardContent>
+                                Contact widget placeholder
+                              </CardContent>
+                            </Card>
+                          </Box>
+                          <a href="/">Learn more about their mandate.</a>
+                        </Box>
                       </AccordionDetails>
                     </Accordion>
                   ))}
@@ -128,7 +157,6 @@ export class FinalComponent extends React.Component {
             </div>
           </Grid>
         </Grid>
-
       </div>
     )
   }
