@@ -1,7 +1,7 @@
-import React from 'react'
+import { Box, Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import { Box, Typography } from '@material-ui/core';
+import React from 'react';
 
 class Intro extends React.Component {
   continue = e => {
