@@ -1,7 +1,7 @@
 import { Box, Button, Grid, Typography } from '@material-ui/core';
 import ArrowBack from '@material-ui/icons/ArrowBack';
-import React from 'react'
-import data from '../../data/data.json'
+import React from 'react';
+import data from '../../data/data.json';
 
 export class IssueImpact extends React.Component {
   continue = e => {
@@ -45,6 +45,7 @@ export class IssueImpact extends React.Component {
               <Box mb={1}>
                 <Button
                   variant="outlined"
+                  color="primary"
                   onClick={this.back}
                 >
                   <ArrowBack /> Back
