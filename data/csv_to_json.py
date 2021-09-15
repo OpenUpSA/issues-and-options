@@ -12,6 +12,11 @@ with open('data/PA issues and options spreadsheet prototype - data.csv', 'r') as
     for issue in list(data):
         if issue["What does your issue most closely relate to?"]:
             final_data["issues"][issue["What does your issue most closely relate to?"]] = issue["What does your issue most closely relate to?"]
+        if issue["What does your issue most closely relate to?"] == "*":
+            if issue["What does your issue most closely relate to?"] not in final_data["ZA"] and issue["What does your issue most closely relate to?"] not in final_data["me"]:
+                final_data["ZA"][issue["What does your issue most closely relate to?"]] = []
+                final_data["me"][issue["What does your issue most closely relate to?"]] = []
+            final_data["me"][issue["What does your issue most closely relate to?"]].append(issue)
         if issue["How many people are affected by your issue?"] == "Just me":
             if issue["What does your issue most closely relate to?"] not in final_data["me"]:
                 final_data["me"][issue["What does your issue most closely relate to?"]] = []
