@@ -6,6 +6,7 @@ import ArrowBack from '@material-ui/icons/ArrowBack';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React from 'react';
 import data from '../../data/data.json';
+import RepLocator from '../Rep-Locator';
 
 export class FinalComponent extends React.Component {
   state = {
@@ -30,11 +31,16 @@ export class FinalComponent extends React.Component {
   render() {
     const { expanded } = this.state;
     const { personAffected, issuesAffected } = this.props.values;
-    const who = data[personAffected][issuesAffected]
+    const entities = data[personAffected][issuesAffected]
       ? data[personAffected][issuesAffected].sort(function (a, b) {
         return parseInt(a['Priority']) - parseInt(b['Priority']);
       })
       : []
+    const repLocator = [
+      'Your Member of Parliament',
+      'Your Member of the Provincial Legislature',
+      'Your ward councillor'
+    ]
     return (
       <div>
         <Grid container
@@ -116,7 +122,7 @@ export class FinalComponent extends React.Component {
                   </Grid>
                 </Grid>
                 <div>
-                  {who && who.map((key, i) => (
+                  {entities && entities.map((key, i) => (
                     <Accordion
                       key={key['Priority']}
                       expanded={expanded === i}
@@ -137,16 +143,20 @@ export class FinalComponent extends React.Component {
                           alignItems="flex-start"
                           flexDirection="column"
                         >
-                          <Typography>
+                          <Typography align="left">
                             {key['Why should they help?']}
                           </Typography>
-                          <Box my={3}>
-                            <Card>
-                              <CardContent>
-                                Contact widget placeholder
-                              </CardContent>
-                            </Card>
-                          </Box>
+                          {
+                            repLocator.includes(key['Who'])
+                              ? <RepLocator who={key['Who']} />
+                              : <Box my={3}>
+                                <Card>
+                                  <CardContent>
+                                    Contact widget placeholder
+                                  </CardContent>
+                                </Card>
+                              </Box>
+                          }
                           <a href="/">Learn more about their mandate.</a>
                         </Box>
                       </AccordionDetails>

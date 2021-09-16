@@ -1,4 +1,3 @@
-import './App.css';
 import Index from './components/issues_and_options';
 
 function App() {
