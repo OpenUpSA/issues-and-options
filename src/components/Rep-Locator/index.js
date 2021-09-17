@@ -6,8 +6,6 @@ export default class RepLocator extends Component {
     super(props);
     this.state = {
       address: "",
-      lat: "",
-      lng: "",
       addresses_found: []
     };
   }
@@ -18,10 +16,7 @@ export default class RepLocator extends Component {
         .then(response => response.json())
         .then(response => {
           if (response && response.addresses.length > 0) {
-            const { lat, lng } = response.addresses[0];
-            if (lat && lng) {
-              this.setState({ lat, lng, addresses_found: response.addresses });
-            }
+            this.setState({ addresses_found: response.addresses });
           }
         }).catch(err => console.log(err));
     });
