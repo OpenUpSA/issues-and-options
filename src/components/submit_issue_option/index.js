@@ -37,9 +37,9 @@ export class FinalComponent extends React.Component {
       })
       : []
     const repLocator = [
-      'Your Member of Parliament',
-      'Your Member of the Provincial Legislature',
-      'Your ward councillor'
+      'MP',
+      'MPL',
+      'Ward councillor'
     ]
     return (
       <div>
@@ -147,8 +147,8 @@ export class FinalComponent extends React.Component {
                             {key['Why should they help?']}
                           </Typography>
                           {
-                            repLocator.includes(key['Who'])
-                              ? <RepLocator who={key['Who']} />
+                            repLocator.includes(key['Option type'])
+                              ? <RepLocator who={key['Option type']} />
                               : <Box my={3}>
                                 <Card>
                                   <CardContent>
