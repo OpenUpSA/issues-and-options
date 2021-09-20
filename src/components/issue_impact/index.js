@@ -20,7 +20,11 @@ export class IssueImpact extends React.Component {
   };
 
   render() {
-    const issues = Object.keys(data.issues);
+    const { issues } = data
+    const issuesToDisplay = Object.keys(
+      Object.fromEntries(
+        Object.entries(issues).sort(([, a], [, b]) => a > b)
+      ));
     return (
       <div>
         <Grid container
@@ -63,12 +67,10 @@ export class IssueImpact extends React.Component {
               </Box>
               <div>
                 <Box py={3}
-                  // display="flex"
-                  // alignItems="flex-start"
                   display="flex"
                   flexWrap="wrap"
                 >
-                  {issues.map(issue => (
+                  {issuesToDisplay.map(issue => (
                     <Box my={1} mx={1}
                       display="flex"
                       key={issue}
