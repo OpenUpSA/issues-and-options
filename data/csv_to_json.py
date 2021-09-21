@@ -1,43 +1,47 @@
 import csv
 import json
-# # read csv file
-with open('data/PA issues and options spreadsheet prototype - data.csv', 'r') as f:
+
+# constants
+PERSONAL_ISSUES = "just me"
+NATIONAL_ISSUES = "all southafricans"
+CSV_FILE = "data/PA issues and options spreadsheet prototype - data.csv"
+
+with open(CSV_FILE, "r") as f:
     data = csv.DictReader(f)
-    final_data = {
-        "issues": {},
-        "just me": {},
-        "all southafricans": {}
-    }
+    final_data = {"issues": {}, PERSONAL_ISSUES: {}, NATIONAL_ISSUES: {}}
 
     # These are all the entities that exists in all issues and person scenario
     asterisk_entities = []
 
-    for issue in list(data):
-        if issue["What does your issue most closely relate to?"] and issue["What does your issue most closely relate to?"] != "*":
-            final_data["issues"][issue["What does your issue most closely relate to?"]] = issue["What does your issue most closely relate to?"]
-        if issue["What does your issue most closely relate to?"] == "*":
+    for index, issue in enumerate(data):
+        related_issue = issue["What does your issue most closely relate to?"]
+        people_affected = issue["How many people are affected by your issue?"]
+        if related_issue and related_issue != "*":
+            if related_issue not in final_data["issues"]:
+                final_data["issues"][related_issue] = index
+        if related_issue == "*":
             asterisk_entities.append(issue)
             continue
-        if issue["How many people are affected by your issue?"] == "Just me":
-            if issue["What does your issue most closely relate to?"] not in final_data["just me"]:
-                final_data["just me"][issue["What does your issue most closely relate to?"]] = []
-            final_data["just me"][issue["What does your issue most closely relate to?"]].append(issue)
-        elif issue["How many people are affected by your issue?"] == "*":
-            if issue["What does your issue most closely relate to?"] not in final_data["all southafricans"]:
-                final_data["all southafricans"][issue["What does your issue most closely relate to?"]] = []
-            final_data["all southafricans"][issue["What does your issue most closely relate to?"]].append(issue)
-            if issue["What does your issue most closely relate to?"] not in final_data["just me"]:
-                final_data["just me"][issue["What does your issue most closely relate to?"]] = []
-            final_data["just me"][issue["What does your issue most closely relate to?"]].append(issue)
+        if people_affected == "Just me":
+            if related_issue not in final_data[PERSONAL_ISSUES]:
+                final_data[PERSONAL_ISSUES][related_issue] = []
+            final_data[PERSONAL_ISSUES][related_issue].append(issue)
+        elif people_affected == "*":
+            if related_issue not in final_data[NATIONAL_ISSUES]:
+                final_data[NATIONAL_ISSUES][related_issue] = []
+            final_data[NATIONAL_ISSUES][related_issue].append(issue)
+            if related_issue not in final_data[PERSONAL_ISSUES]:
+                final_data[PERSONAL_ISSUES][related_issue] = []
+            final_data[PERSONAL_ISSUES][related_issue].append(issue)
 
     # access all south africans issues
-    for issue in final_data["all southafricans"]:
+    for issue in final_data[NATIONAL_ISSUES]:
         # append asterisk issues to all south africans issues
-        final_data["all southafricans"][issue].extend(asterisk_entities)
+        final_data[NATIONAL_ISSUES][issue].extend(asterisk_entities)
 
-    for issue in final_data["just me"]:
+    for issue in final_data[PERSONAL_ISSUES]:
         # append asterisk issues to just me issues
-        final_data["just me"][issue].extend(asterisk_entities)
+        final_data[PERSONAL_ISSUES][issue].extend(asterisk_entities)
 
-    with open('src/data/data.json', 'w') as f:
+    with open("src/data/data.json", "w") as f:
         json.dump(final_data, f)

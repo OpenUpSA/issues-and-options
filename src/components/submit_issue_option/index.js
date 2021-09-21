@@ -23,6 +23,10 @@ export class FinalComponent extends React.Component {
     this.props.prevStep();
   };
 
+  goToStep = i => {
+    this.props.goToStep(i);
+  };
+
   handleChange = (panel) => (event, isExpanded) => {
     event.preventDefault();
     this.setState({ expanded: isExpanded ? panel : false });
@@ -97,6 +101,7 @@ export class FinalComponent extends React.Component {
                     <Button
                       variant="outlined"
                       title="How many people does your issue affect?"
+                      onClick={() => this.goToStep(2)}
                     >
                       {personAffected}
                     </Button>
@@ -105,6 +110,7 @@ export class FinalComponent extends React.Component {
                     <Button
                       variant="outlined"
                       title="Which area does your issue most closely relate to?"
+                      onClick={() => this.goToStep(3)}
                     >
                       {issuesAffected}
                     </Button>

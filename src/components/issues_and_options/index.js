@@ -23,6 +23,11 @@ export default class IssuesAndOptions extends Component {
     this.setState({ step: step + 1 });
   }
 
+  // go to step
+  goToStep = (step) => {
+    this.setState({ step });
+  }
+
   // handle field change
   handleChange = input => e => {
     this.setState({ [input]: e.target.value });
@@ -58,6 +63,7 @@ export default class IssuesAndOptions extends Component {
       case 4:
         return <FinalComponent
           prevStep={this.prevStep}
+          goToStep={this.goToStep}
           values={this.state}
         />;
       default:
