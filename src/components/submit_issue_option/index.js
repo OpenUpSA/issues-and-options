@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardContent, Grid, Typography } from '@material-ui/core';
+import { Box, Button, Grid, Typography } from '@material-ui/core';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -6,6 +6,7 @@ import ArrowBack from '@material-ui/icons/ArrowBack';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React from 'react';
 import data from '../../data/data.json';
+import HTMLRender from '../html-renderer';
 import RepLocator from '../Rep-Locator';
 
 export class FinalComponent extends React.Component {
@@ -155,13 +156,7 @@ export class FinalComponent extends React.Component {
                           {
                             repLocator.includes(key['Option type'])
                               ? <RepLocator who={key['Option type']} />
-                              : <Box my={3}>
-                                <Card>
-                                  <CardContent>
-                                    Contact widget placeholder
-                                  </CardContent>
-                                </Card>
-                              </Box>
+                              : <HTMLRender issue={key} />
                           }
                           <a href="/">Learn more about their mandate.</a>
                         </Box>
