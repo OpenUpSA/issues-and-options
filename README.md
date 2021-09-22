@@ -68,5 +68,21 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
 # issues-and-options
 Help users discover the standard public service options available to address their needs
+
+### How to export and load data from spreadsheet
+
+1. Export data from spreadsheet to a csv file using the menu option "File > Download > select CSV"
+
+![Screenshot of Google spreadsheet](assets/README_attachements/download_as_csv.png "Download as CSV")
+
+2. Copy the file contents of the downloaded CSV into `data/PA issues and options spreadsheet prototype - data.csv`
+
+3. Run the Python script `python data/csv_to_json.py` to convert the CSV file to JSON format.
+
+4. The python script will create the JSON file in the appropriate directory.
+
+5. Run the React app using `yarn start`
