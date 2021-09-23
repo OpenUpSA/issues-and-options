@@ -60,7 +60,6 @@ export class FinalComponent extends React.Component {
       borderRadius: '50%',
       fontSize: '13px',
       padding: '2px',
-      marginRight: '12px',
       fontWeight: '600',
       position: 'absolute',
     });
@@ -180,7 +179,7 @@ export class FinalComponent extends React.Component {
                       <AccordionNumberMarker>
                         {i + 1}
                       </AccordionNumberMarker>
-                      <div style={{ marginLeft: '10%' }}>
+                      <div style={{ marginLeft: '8%' }}>
                         <Typography>
                           {key['Who']}
                         </Typography>
