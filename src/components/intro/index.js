@@ -1,4 +1,4 @@
-import { Box, Typography } from '@material-ui/core';
+import { Box, ImageList, Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import React from 'react';
@@ -9,29 +9,37 @@ class Intro extends React.Component {
     this.props.nextStep();
   };
   render() {
-
+    const { width } = this.props.values;
     return (
       <div>
         <Grid container
         >
-          <Grid item xs={2}>
+          <Grid item xs={12} md={3}>
             <Box
               display="flex"
-              alignItems="flex-start"
+              alignItems="flex-center"
               flexDirection="column"
-              p={8}
             >
-              image
+              <ImageList sx={{ width: 100, height: 100 }}>
+                <img
+                  src={
+                    width < 960
+                      ? `${process.env.PUBLIC_URL}/assets/app-images/issues-img-mobile.svg`
+                      : `${process.env.PUBLIC_URL}/assets/app-images/issues-img.svg`
+                  }
+                  alt=""
+                  style={{ width: "100%", height: "184px", padding: "2px" }} />
+              </ImageList>
             </Box>
           </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={12} md={9}>
             <Grid container>
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <Box
                   display="flex"
                   alignItems="flex-start"
                   flexDirection="column"
-                  p={8}
+                  p={2}
                 >
                   <Typography align="left" variant="h4">
                     Have an issue, but not sure who to to talk to?
@@ -46,12 +54,12 @@ class Intro extends React.Component {
                   >Get started Now</Button>
                 </Box>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <Box
                   display="flex"
                   alignItems="flex-start"
                   flexDirection="column"
-                  p={8}
+                  p={2}
                 >
                   <Typography align="left" variant="subtitle1">
                     Useful links

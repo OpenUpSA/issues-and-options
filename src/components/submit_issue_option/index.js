@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Typography } from '@material-ui/core';
+import { Box, Button, Grid, ImageList, Typography } from '@material-ui/core';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -50,23 +50,24 @@ export class FinalComponent extends React.Component {
       <div>
         <Grid container
         >
-          <Grid item xs={2}>
+          <Grid item xs={12} md={3}>
             <Box
               display="flex"
-              alignItems="flex-start"
+              alignItems="flex-end"
               flexDirection="column"
-              p={8}
             >
-              image
+              <ImageList sx={{ width: 500, height: 450 }}>
+                <img src={`${process.env.PUBLIC_URL}/assets/app-images/question-img.svg`} alt="" />
+              </ImageList >
             </Box>
           </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={12} md={9}>
             <div>
               <Box
                 display="flex"
                 alignItems="flex-start"
                 flexDirection="column"
-                p={8}
+                p={2}
               >
                 <Box mb={1}>
                   <Button
@@ -83,12 +84,12 @@ export class FinalComponent extends React.Component {
                   </Typography>
                 </Box>
 
-                <Box mb={1}>
+                <Box mb={3}>
                   <Typography align="left" variant="h4">
                     Let's get you talking to the right person!
                   </Typography>
                 </Box>
-                <Box mb={1}>
+                <Box mb={3}>
                   <Typography align="left" variant="subtitle1">
                     These are the results based on answers you provided:
                   </Typography>
@@ -107,7 +108,7 @@ export class FinalComponent extends React.Component {
                       {personAffected}
                     </Button>
                   </Box>
-                  <Box mr={3}>
+                  <Box mb={3}>
                     <Button
                       variant="outlined"
                       title="Which area does your issue most closely relate to?"
@@ -119,13 +120,19 @@ export class FinalComponent extends React.Component {
                 </Box>
 
                 <Grid container>
-                  <Grid item xs={6}>
-                    <Typography align="left" variant="subtitle1">
-                      Who to contact in what order:
-                    </Typography>
+                  <Grid item md={6} xs={12}>
+                    <Box mb={3}>
+                      <Typography align="left" variant="body1">
+                        Who to contact in what order:
+                      </Typography>
+                    </Box>
                   </Grid>
-                  <Grid item xs={6}>
-                    <a href="/">Why is it important to escalate in this order?</a>
+                  <Grid item md={6} xs={12}>
+                    <Box mb={3}>
+                      <Typography align="left" variant="subtitle1">
+                        <a href="/">Why is it important to escalate in this order?</a>
+                      </Typography>
+                    </Box>
                   </Grid>
                 </Grid>
                 <div>
@@ -150,15 +157,14 @@ export class FinalComponent extends React.Component {
                           alignItems="flex-start"
                           flexDirection="column"
                         >
-                          <Typography align="left">
-                            {key['Why should they help?']}
-                          </Typography>
                           {
                             repLocator.includes(key['Option type'])
                               ? <RepLocator who={key['Option type']} />
                               : <HTMLRender issue={key} />
                           }
-                          <a href="/">Learn more about their mandate.</a>
+                          <Typography align="left" variant="body2">
+                            {key['Why should they help?']}
+                          </Typography>
                         </Box>
                       </AccordionDetails>
                     </Accordion>

@@ -29,22 +29,21 @@ export class IssueImpact extends React.Component {
       <div>
         <Grid container
         >
-          <Grid item xs={2}>
+          <Grid item xs={12} md={2}>
             <Box
               display="flex"
               alignItems="flex-start"
               flexDirection="column"
-              p={8}
             >
-              image
+              <img src={`${process.env.PUBLIC_URL}/assets/app-images/issues-img-mobile.svg`} alt="" />
             </Box>
           </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={12} md={10}>
             <Box
               display="flex"
               alignItems="flex-start"
               flexDirection="column"
-              p={8}
+              p={2}
             >
               <Box mb={1}>
                 <Button
@@ -85,9 +84,9 @@ export class IssueImpact extends React.Component {
                 </Box>
               </div>
               <div>
-                <Box py={3}
+                <Box
                   display="flex"
-                  alignItems="flex-start"
+                  // alignItems="flex-start"
                 >
                   <Box mb={1} mr={3}>
                     <Button
@@ -112,9 +111,9 @@ export class IssueImpact extends React.Component {
                   </Box>
                 </Box>
               </div>
-              <div>
+              <Typography align="left" variant="subtitle1">
                 <a href="/">Why are we asking this question?</a>
-              </div>
+              </Typography>
             </Box>
           </Grid>
         </Grid>

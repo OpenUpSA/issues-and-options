@@ -16,26 +16,29 @@ export class PeopleImpact extends React.Component {
   };
 
   render() {
+    const { width } = this.props.values;
     return (
       <div>
         <Grid container
         >
-          <Grid item xs={2}>
+          <Grid item xs={12} md={3}>
             <Box
               display="flex"
               alignItems="flex-start"
               flexDirection="column"
-              p={8}
             >
-              image
+              <img
+              src={`${process.env.PUBLIC_URL}/assets/app-images/issues-img.svg`}
+              alt=""
+              style={{ width: "100%", height: "184px", padding: "2px" }} />
             </Box>
           </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={12} md={9}>
             <Box
               display="flex"
               alignItems="flex-start"
               flexDirection="column"
-              p={8}
+              p={2}
             >
               <Box mb={1}>
                 <Button
@@ -67,9 +70,9 @@ export class PeopleImpact extends React.Component {
                   <Button variant="contained" color="secondary" onClick={() => this.selectedOption('all southafricans')}>All South Africans</Button>
                 </Box>
               </Box>
-              <div>
+              <Typography align="left" variant="subtitle1">
                 <a href="/">Why are we asking this question?</a>
-              </div>
+              </Typography>
             </Box>
           </Grid>
         </Grid>

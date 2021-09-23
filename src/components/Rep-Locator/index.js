@@ -49,7 +49,11 @@ export default class RepLocator extends Component {
             {
               addresses_found.map(address => (
                 <ListItem key={address.lat}>
-                  <a href={`https://www.pa.org.za/place/latlon/${address.lat},${address.lng}/?#${repLocatorFragment}`} target="_blank" rel="noopener noreferrer">
+                  <a
+                  href={`https://www.pa.org.za/place/latlon/${address.lat},${address.lng}/?#${repLocatorFragment}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Click to open.">
                     <ListItemText primary={address.formatted_address} />
                   </a>
                 </ListItem>
