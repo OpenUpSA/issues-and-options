@@ -16,7 +16,6 @@ export class PeopleImpact extends React.Component {
   };
 
   render() {
-    const { width } = this.props.values;
     return (
       <div>
         <Grid container
