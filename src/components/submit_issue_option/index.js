@@ -165,9 +165,10 @@ export class FinalComponent extends React.Component {
                 </Grid>
               </Grid>
               {entities && entities.map((key, i) => (
-                <Box mb={1}>
+                <Box mb={1}
+                  key={key['Priority']}
+                >
                   <Accordion
-                    key={key['Priority']}
                     expanded={expanded === i}
                     onChange={this.handleChange(i)}
                   >
@@ -176,14 +177,16 @@ export class FinalComponent extends React.Component {
                       aria-controls="panel1a-content"
                       id="panel1a-header"
                     >
-                      <AccordionNumberMarker>
-                        {i + 1}
-                      </AccordionNumberMarker>
-                      <div style={{ marginLeft: '8%' }}>
+                      <Box>
+                        <AccordionNumberMarker>
+                          {i + 1}
+                        </AccordionNumberMarker>
+                      </Box>
+                      <Box ml={6}>
                         <Typography>
                           {key['Who']}
                         </Typography>
-                      </div>
+                      </Box>
                     </AccordionSummary>
                     <AccordionDetails>
                       <Box
