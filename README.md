@@ -77,7 +77,7 @@ Help users discover the standard public service options available to address the
 
 1. Export data from spreadsheet to a csv file using the menu option "File > Download > select CSV"
 
-![Screenshot of Google spreadsheet](assets/README_attachements/download_as_csv.png "Download as CSV")
+![Screenshot of Google spreadsheet](public/assets/README_attachements/download_as_csv.png "Download as CSV")
 
 2. Copy the file contents of the downloaded CSV into `data/PA issues and options spreadsheet prototype - data.csv`
 

@@ -1,7 +1,9 @@
-import { Box, Button, Grid, Typography } from '@material-ui/core';
+import { Box, Grid, ImageList, Typography } from '@material-ui/core';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import React from 'react';
 import data from '../../data/data.json';
+import { BackButton, BasicButton, UsefulLinkButton } from '../utils/Buttons';
+
 
 export class IssueImpact extends React.Component {
   continue = e => {
@@ -26,99 +28,107 @@ export class IssueImpact extends React.Component {
         Object.entries(issues).sort(([, a], [, b]) => a > b)
       ));
     return (
-      <div>
-        <Grid container
+      <Grid container spacing={2}
+        style={{ background: '#007B5A' }}
+      >
+        <Grid
+          item
+          xs={12}
+          md={3}
+          style={{ background: 'rgba(255, 255, 255, 0.05)' }}
         >
-          <Grid item xs={2}>
-            <Box
-              display="flex"
-              alignItems="flex-start"
-              flexDirection="column"
-              p={8}
-            >
-              image
-            </Box>
-          </Grid>
-          <Grid item xs={10}>
-            <Box
-              display="flex"
-              alignItems="flex-start"
-              flexDirection="column"
-              p={8}
-            >
-              <Box mb={1}>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  onClick={this.back}
-                >
-                  <ArrowBack /> Back
-                </Button>
-              </Box>
-              <Box mb={1}>
-                <Typography align="left" variant="subtitle1">
-                  Question 1
-                </Typography>
-              </Box>
-              <Box mb={1}>
-                <Typography align="left" variant="h4">
-                  Which area does your issue most closely relate to?
-                </Typography>
-              </Box>
-              <div>
-                <Box py={3}
-                  display="flex"
-                  flexWrap="wrap"
-                >
-                  {issuesToDisplay.map(issue => (
-                    <Box my={1} mx={1}
-                      display="flex"
-                      key={issue}
-                    >
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        onClick={() => this.selectedOption(issue)}>{issue}
-                      </Button>
-                    </Box>
-                  ))}
-                </Box>
-              </div>
-              <div>
-                <Box py={3}
-                  display="flex"
-                  alignItems="flex-start"
-                >
-                  <Box mb={1} mr={3}>
-                    <Button
-                      variant="outlined"
-                    >
-                      Show me more areas
-                    </Button>
-                  </Box>
-                  <Box mb={1} mr={3}>
-                    <Button
-                      variant="outlined"
-                    >
-                      I don't see an appropriate area here
-                    </Button>
-                  </Box>
-                  <Box mb={1} mr={3}>
-                    <Button
-                      variant="outlined"
-                    >
-                      I'm not sure
-                    </Button>
-                  </Box>
-                </Box>
-              </div>
-              <div>
-                <a href="/">Why are we asking this question?</a>
-              </div>
-            </Box>
-          </Grid>
+          <Box
+            display="flex"
+            alignItems="flex-center"
+            flexDirection="column"
+            p={6}
+          >
+            <ImageList sx={{ width: 100, height: 100 }}>
+              <img
+                src={`${process.env.PUBLIC_URL}/assets/app-images/question-img.svg`}
+                alt=""
+                style={{ width: "100%", height: "184px", padding: "2px" }} />
+            </ImageList>
+          </Box>
         </Grid>
-      </div>
+        <Grid item xs={12} md={9}
+          style={{ color: '#FFFFFF' }}>
+          <Box
+            display="flex"
+            alignItems="flex-start"
+            flexDirection="column"
+            p={6}
+          >
+            <Box mb={1}>
+              <BackButton
+                variant="outlined"
+                color="primary"
+                onClick={this.back}
+              >
+                <ArrowBack /> Back
+              </BackButton>
+            </Box>
+            <Box mb={1}>
+              <Typography align="left" variant="subtitle1">
+                Question 1
+              </Typography>
+            </Box>
+            <Box mb={1}>
+              <Typography align="left" variant="h4">
+                Which area does your issue most closely relate to?
+              </Typography>
+            </Box>
+            <div>
+              <Box py={3}
+                display="flex"
+                flexWrap="wrap"
+              >
+                {issuesToDisplay.map(issue => (
+                  <Box my={1} mx={1}
+                    display="flex"
+                    key={issue}
+                  >
+                    <BasicButton
+                      variant="contained"
+                      color="secondary"
+                      onClick={() => this.selectedOption(issue)}>{issue}
+                    </BasicButton>
+                  </Box>
+                ))}
+              </Box>
+            </div>
+            <div>
+              <Box
+                display="flex"
+                mb={3}
+              >
+                <Box mb={1} mr={3}>
+                  <UsefulLinkButton>
+                    Show me more areas
+                  </UsefulLinkButton>
+                </Box>
+                <Box mb={1} mr={3}>
+                  <UsefulLinkButton>
+                    I don't see an appropriate area here
+                  </UsefulLinkButton>
+                </Box>
+                <Box mb={1} mr={3}>
+                  <UsefulLinkButton>
+                    I'm not sure
+                  </UsefulLinkButton>
+                </Box>
+              </Box>
+            </div>
+            <Typography align="left" variant="subtitle1">
+              <a
+                href="/"
+                style={{ textDecorationLine: 'underline', color: '#FFFFFF' }}>
+                Why are we asking this question?
+              </a>
+            </Typography>
+          </Box>
+        </Grid>
+      </Grid>
     )
   }
 }
