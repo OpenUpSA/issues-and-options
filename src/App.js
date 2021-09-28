@@ -2,7 +2,9 @@ import Index from './components/issues_and_options';
 
 function App() {
   return (
-    <Index />
+    <div className="App">
+      <Index />
+    </div>
   );
 }
 

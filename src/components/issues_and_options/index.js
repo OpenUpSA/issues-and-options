@@ -9,8 +9,6 @@ export default class IssuesAndOptions extends Component {
     step: 1,
     personAffected: null,
     issuesAffected: null,
-    width: 0,
-    height: 0
   }
 
   // go back to previous step
@@ -33,19 +31,6 @@ export default class IssuesAndOptions extends Component {
   // handle field change
   handleChange = input => e => {
     this.setState({ [input]: e.target.value });
-  }
-
-  componentDidMount = () => {
-    this.updateWindowDimensions();
-    window.addEventListener('resize', this.updateWindowDimensions);
-  }
-
-  componentWillUnmount = () => {
-    window.removeEventListener('resize', this.updateWindowDimensions);
-  }
-
-  updateWindowDimensions = () => {
-    this.setState({ width: window.innerWidth, height: window.innerHeight });
   }
 
   render() {

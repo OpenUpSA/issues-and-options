@@ -1,4 +1,4 @@
-import { FormControl, List, ListItem, ListItemText, TextField } from '@material-ui/core';
+import { List, ListItem, TextField, ListItemText, FormControl } from '@material-ui/core';
 import React, { Component } from 'react';
 
 export default class RepLocator extends Component {
@@ -33,10 +33,8 @@ export default class RepLocator extends Component {
     const repLocatorFragment = repLocatorContacts[who];
     if (repLocatorFragment) {
       return (
-        <>
-          <FormControl fullWidth
-            style={{ width: '80%', alignContent: 'center', margin: 'auto' }}
-          >
+        <div>
+          <FormControl fullWidth>
             <TextField
               fullWidth sx={{ m: 1 }}
               id="address"
@@ -51,18 +49,14 @@ export default class RepLocator extends Component {
             {
               addresses_found.map(address => (
                 <ListItem key={address.lat}>
-                  <a
-                    href={`https://www.pa.org.za/place/latlon/${address.lat},${address.lng}/?#${repLocatorFragment}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="Click to open.">
+                  <a href={`https://www.pa.org.za/place/latlon/${address.lat},${address.lng}/?#${repLocatorFragment}`} target="_blank" rel="noopener noreferrer">
                     <ListItemText primary={address.formatted_address} />
                   </a>
                 </ListItem>
               ))
             }
           </List>
-        </>
+        </div>
       )
     } else {
       return ('')
