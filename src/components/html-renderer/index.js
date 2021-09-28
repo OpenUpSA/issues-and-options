@@ -23,16 +23,22 @@ export default class HTMLRender extends Component {
               .then(response => response.json())
               .then(response => {
                 if (response && response.data.length > 0) {
-                  const demarcationCode = response.data[0]['municipality.demarcation_code'];
+                  const longName = response.data[0]['municipality.long_name'];
                   const phoneNumber = response.data[0]['municipality.phone_number'];
                   const url = response.data[0]['municipality.url'];
-                  const name = response.data[0]['municipality.name'];
+                  let streetAddress = ""
+                  Object.keys(response.data[0]).forEach(key => {
+                    if (key.includes("street_address")) {
+                      streetAddress = streetAddress + response.data[0][key] + "\n";
+                    }
+                  })
+
                   this.setState({
                     municipal_addresses_found: [{
-                      demarcationCode,
                       phoneNumber,
                       url,
-                      name
+                      longName,
+                      streetAddress
                     }]
                   });
                 }
@@ -70,11 +76,20 @@ export default class HTMLRender extends Component {
             <List>
               {
                 this.state.municipal_addresses_found.map(address => (
-                  <ListItem key={address.name}>
-                    <p>
-                      {address.name} ({address.demarcationCode}): {address.phoneNumber}
-                    </p>
-                  </ListItem>
+                  <div key={address.name}>
+                    <ListItem>
+                      Name: {address.longName}
+                    </ListItem>
+                    <ListItem>
+                      Phone Number: {address.phoneNumber}
+                    </ListItem>
+                    <ListItem>
+                      Website Url: {address.url}
+                    </ListItem>
+                    <ListItem>
+                      Street Address: {address.streetAddress}
+                    </ListItem>
+                  </div>
                 ))
               }
             </List>
@@ -89,9 +104,9 @@ export default class HTMLRender extends Component {
   render() {
     const { issue } = this.props;
     return (
-      <div>
+      <>
         {this.getHtml(issue)}
-      </div>
+      </>
     )
   }
 }
