@@ -1,5 +1,7 @@
 import { FormControl, List, ListItem, TextField } from '@material-ui/core';
-import React, { Component } from 'react'
+import { Business, Label, Language, LocalPhoneOutlined } from '@material-ui/icons';
+import React, { Component } from 'react';
+
 
 export default class HTMLRender extends Component {
   constructor(props) {
@@ -78,22 +80,22 @@ export default class HTMLRender extends Component {
                 this.state.municipal_addresses_found.map(address => (
                   <div key={address.name}>
                     <ListItem>
-                      Name: {address.longName}
+                      <Label /> Name: {address.longName}
                     </ListItem>
                     <ListItem>
-                      Phone Number:
+                      <LocalPhoneOutlined /> Phone Number:
                       <a href={`tel:${address.phoneNumber}`}>
                         {address.phoneNumber}
                       </a>
                     </ListItem>
                     <ListItem>
-                      Website Url:
+                      <Language /> Website Url:
                       <a href={address.url} target="_blank" rel="noreferrer">
                         {address.url}
                       </a>
                     </ListItem>
                     <ListItem>
-                      Street Address:
+                      <Business /> Street Address:
                       <a href={`https://maps.google.com/?q=${address.streetAddress}`}
                         target="_blank"
                         rel="noreferrer">
