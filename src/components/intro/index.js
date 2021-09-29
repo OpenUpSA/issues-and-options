@@ -1,11 +1,17 @@
 import { Box, ImageList, Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import React from 'react';
+import ReactGA from 'react-ga';
 import { GetStartedButton, UsefulLinkButton } from '../utils/Buttons';
 
 class Intro extends React.Component {
   continue = e => {
     e.preventDefault();
+    ReactGA.event({
+      category: 'Question Answer',
+      action: 'Get started',
+      label: 'Get started'
+    });
     this.props.nextStep();
   };
   render() {

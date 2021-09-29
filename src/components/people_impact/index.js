@@ -1,6 +1,7 @@
 import { Box, Grid, ImageList, Typography } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import React from 'react';
+import ReactGA from 'react-ga';
 import { BackButton, BasicButton } from '../utils/Buttons';
 
 
@@ -14,6 +15,11 @@ export class PeopleImpact extends React.Component {
   selectedOption = (option) => {
     this.props.values.personAffected = option;
     this.props.nextStep();
+    ReactGA.event({
+      category: 'Question Answer',
+      action: 'How many people are affected',
+      label: option
+    });
   };
 
   render() {

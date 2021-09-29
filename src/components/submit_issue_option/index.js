@@ -10,6 +10,7 @@ import data from '../../data/data.json';
 import HTMLRender from '../html-renderer';
 import RepLocator from '../Rep-Locator';
 import { BackButton, UsefulLinkButton } from '../utils/Buttons';
+import ReactGA from 'react-ga';
 
 export class FinalComponent extends React.Component {
   state = {
@@ -30,9 +31,15 @@ export class FinalComponent extends React.Component {
     this.props.goToStep(i);
   };
 
-  handleChange = (panel) => (event, isExpanded) => {
+  handleChange = (panel, key) => (event, isExpanded) => {
     event.preventDefault();
     this.setState({ expanded: isExpanded ? panel : false });
+    const label = `${key['What does your issue most closely relate to?']} - ${key['Who']}`
+    ReactGA.event({
+      category: 'Option',
+      action: 'Expand',
+      label
+    });
   };
 
   render() {
@@ -167,11 +174,11 @@ export class FinalComponent extends React.Component {
               {entities && entities.map((key, i) => (
                 <Box mb={1}
                   key={key['Priority']}
-                  style={{ width: "100%"}}
+                  style={{ width: "100%" }}
                 >
                   <Accordion
                     expanded={expanded === i}
-                    onChange={this.handleChange(i)}
+                    onChange={this.handleChange(i, key)}
                   >
                     <AccordionSummary
                       expandIcon={<ExpandMoreIcon />}

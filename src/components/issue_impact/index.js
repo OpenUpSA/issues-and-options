@@ -1,6 +1,7 @@
 import { Box, Grid, ImageList, Typography } from '@material-ui/core';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import React from 'react';
+import ReactGA from 'react-ga';
 import data from '../../data/data.json';
 import { BackButton, BasicButton, UsefulLinkButton } from '../utils/Buttons';
 
@@ -19,6 +20,11 @@ export class IssueImpact extends React.Component {
   selectedOption = (option) => {
     this.props.values.issuesAffected = option;
     this.props.nextStep();
+    ReactGA.event({
+      category: 'Question Answer',
+      action: 'What is your issue about?',
+      label: option
+    });
   };
 
   render() {
