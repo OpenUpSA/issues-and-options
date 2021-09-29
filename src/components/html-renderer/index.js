@@ -8,7 +8,8 @@ export default class HTMLRender extends Component {
     super(props);
     this.state = {
       address: "",
-      municipal_addresses_found: []
+      municipal_addresses_found: [],
+      mayor_addresses_found: []
     };
   }
 
@@ -50,6 +51,48 @@ export default class HTMLRender extends Component {
     });
   };
 
+  onMayorValueChange = event => {
+    const address = event.target.value;
+    this.setState({ [event.target.name]: address }, () => {
+      address && fetch('https://mapit.code4sa.org/address?partial=1&generation=2&type=MN&address=' + address)
+        .then(response => response.json())
+        .then(response => {
+          if (response && response.addresses.length > 0) {
+            const muniCodeRef = response.addresses[0].areas[0];
+            const muniCode = response[muniCodeRef].codes.MDB;
+            fetch('https://municipaldata.treasury.gov.za/api/cubes/officials/facts?cut=municipality.demarcation_code:' + muniCode)
+              .then(response => response.json())
+              .then(response => {
+                if (response && response.data.length > 0) {
+                  const roles = ["Mayor/Executive Mayor", "Secretary of Mayor/Executive Mayor"]
+                  const contactDetails = response.data.filter(item => roles.includes(item['role.role']));
+                  const contacts = []
+                  for (const contactDetail of contactDetails) {
+                    const phoneNumber = contactDetail['contact_details.phone_number'];
+                    const emailAddress = contactDetail['contact_details.email_address'];
+                    const name = contactDetail['contact_details.name'];
+                    const title = contactDetail['contact_details.title'];
+                    const role = contactDetail['role.role'];
+                    contacts.push({
+                      phoneNumber,
+                      emailAddress,
+                      name,
+                      title,
+                      role
+                    });
+                  }
+                  this.setState({
+                    mayor_addresses_found: [...contacts]
+                  })
+
+                }
+              });
+          }
+        });
+    })
+  }
+
+
   getHtml(option) {
     switch (option['Option type']) {
       case 'National Department':
@@ -78,7 +121,7 @@ export default class HTMLRender extends Component {
             <List>
               {
                 this.state.municipal_addresses_found.map(address => (
-                  <div key={address.name}>
+                  <div key={address.longName}>
                     <ListItem>
                       <Label /> Name: {address.longName}
                     </ListItem>
@@ -109,6 +152,50 @@ export default class HTMLRender extends Component {
           </>
         )
 
+      case 'Mayor':
+        return (
+          <>
+            <FormControl fullWidth
+              style={{ width: '80%', alignContent: 'center', margin: 'auto' }}
+            >
+              <TextField
+                fullWidth sx={{ m: 1 }}
+                id="address"
+                name="address"
+                label={`Enter your address to find your ${option['Who']}`}
+                variant="outlined"
+                value={this.state.address}
+                onChange={this.onMayorValueChange}
+              />
+            </FormControl>
+            {<List>
+              {
+                this.state.mayor_addresses_found.map(address => (
+                  <div key={address.name}>
+                    <ListItem>
+                      <u>{address.role}</u>
+                    </ListItem>
+                    <ListItem>
+                      <Label /> Name: {address.title} {address.name}
+                    </ListItem>
+                    <ListItem>
+                      <LocalPhoneOutlined /> Phone Number:
+                      <a href={`tel:${address.phoneNumber}`}>
+                        {address.phoneNumber}
+                      </a>
+                    </ListItem>
+                    <ListItem>
+                      <Language /> Email Address:
+                      <a href={`mailto:${address.emailAddress}`}>
+                        {address.emailAddress}
+                      </a>
+                    </ListItem>
+                  </div>
+                ))
+              }
+            </List>}
+          </>
+        )
       default:
         return <div dangerouslySetInnerHTML={{ __html: option['Option data'] }} />;
     }
