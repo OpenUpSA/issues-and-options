@@ -81,13 +81,24 @@ export default class HTMLRender extends Component {
                       Name: {address.longName}
                     </ListItem>
                     <ListItem>
-                      Phone Number: {address.phoneNumber}
+                      Phone Number:
+                      <a href={`tel:${address.phoneNumber}`}>
+                        {address.phoneNumber}
+                      </a>
                     </ListItem>
                     <ListItem>
-                      Website Url: {address.url}
+                      Website Url:
+                      <a href={address.url} target="_blank" rel="noreferrer">
+                        {address.url}
+                      </a>
                     </ListItem>
                     <ListItem>
-                      Street Address: {address.streetAddress}
+                      Street Address:
+                      <a href={`https://maps.google.com/?q=${address.streetAddress}`}
+                        target="_blank"
+                        rel="noreferrer">
+                        {address.streetAddress}
+                      </a>
                     </ListItem>
                   </div>
                 ))

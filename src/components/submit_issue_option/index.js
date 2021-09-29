@@ -167,6 +167,7 @@ export class FinalComponent extends React.Component {
               {entities && entities.map((key, i) => (
                 <Box mb={1}
                   key={key['Priority']}
+                  style={{ width: "100%"}}
                 >
                   <Accordion
                     expanded={expanded === i}
