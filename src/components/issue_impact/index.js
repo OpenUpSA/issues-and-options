@@ -70,7 +70,7 @@ export class IssueImpact extends React.Component {
             </Box>
             <Box mb={1}>
               <Typography align="left" variant="subtitle1">
-                Question 1
+                Question 2
               </Typography>
             </Box>
             <Box mb={1}>
