@@ -1,5 +1,6 @@
-import { FormControl, List, ListItem, ListItemText, TextField } from '@material-ui/core'; 
+import { FormControl, List, ListItem, ListItemText, TextField } from '@material-ui/core';
 import React, { Component } from 'react';
+import { onClickReplocatorLink } from '../html-renderer';
 
 export default class RepLocator extends Component {
   constructor(props) {
@@ -22,14 +23,16 @@ export default class RepLocator extends Component {
     });
   };
 
+
   render() {
-    const { who } = this.props;
+    const { issue } = this.props;
     const repLocatorContacts = {
       'MP': 'mps',
       'MPL': 'mpls',
       'Ward councillor': 'councillors'
     }
     const { addresses_found } = this.state;
+    const who = issue['Option type']
     const repLocatorFragment = repLocatorContacts[who];
     if (repLocatorFragment) {
       return (
@@ -56,7 +59,10 @@ export default class RepLocator extends Component {
                     target="_blank"
                     rel="noopener noreferrer"
                     title="Click to open.">
-                    <ListItemText primary={address.formatted_address} />
+                    <ListItemText
+                      id="replocatorLink"
+                      onClick={onClickReplocatorLink(issue)}
+                      primary={address.formatted_address} />
                   </a>
                 </ListItem>
               ))

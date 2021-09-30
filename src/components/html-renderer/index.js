@@ -1,6 +1,18 @@
 import { FormControl, List, ListItem, TextField } from '@material-ui/core';
 import { Business, Label, Language, LocalPhoneOutlined } from '@material-ui/icons';
 import React, { Component } from 'react';
+import ReactGA from 'react-ga';
+
+
+export const onClickReplocatorLink = (issue) => (e) => {
+  e.preventDefault();
+  const label = `${issue['What does your issue most closely relate to?']} - ${issue['Who']}`
+  ReactGA.event({
+    category: 'Option',
+    action: 'Action new tab',
+    label
+  });
+}
 
 
 export default class HTMLRender extends Component {
@@ -84,7 +96,10 @@ export default class HTMLRender extends Component {
                     </ListItem>
                     <ListItem>
                       <LocalPhoneOutlined /> Phone Number:
-                      <a href={`tel:${address.phoneNumber}`}>
+                      <a
+                        href={`tel:${address.phoneNumber}`}
+                        onClick={onClickReplocatorLink(option)}
+                      >
                         {address.phoneNumber}
                       </a>
                     </ListItem>
