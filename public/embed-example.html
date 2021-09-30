@@ -1,0 +1,34 @@
+<html>
+
+<head>
+  <style>
+    #embed-container,
+    pre {
+      border: 1px solid #000;
+      padding: 10px;
+      margin: 10px
+    }
+  </style>
+</head>
+
+<body>
+  <p>Embed the Issues and Options tool by pasting the following HTML code in an HTML embed block in your site:</p>
+  <pre id="exampleCode">&#x3C;div id=&#x22;issues-options-embed&#x22;&#x3E;&#x3C;/div&#x3E;
+  &#x3C;script type=&#x22;text/javascript&#x22; src=&#x22;https://pym.nprapps.org/pym.v1.min.js&#x22;&#x3E;&#x3C;/script&#x3E;
+  &#x3C;script&#x3E;
+    var pymParent = new pym.Parent(&#x27;issues-options-embed&#x27;, &#x27;https://ACTUAL_HOST_HERE/&#x27;, {});
+  &#x3C;/script&#x3E;
+&#x3C;/div&#x3E;</pre>
+  <p>Example preview:</p>
+  <div id="embed-container">
+    <div id="issues-options-embed"></div>
+    <script type="text/javascript" src="https://pym.nprapps.org/pym.v1.min.js"></script>
+    <script>
+      var e = new pym.Parent("issues-options-embed", "/", {});
+
+      document.getElementById('exampleCode').innerHTML = document.getElementById('exampleCode').innerHTML.replaceAll('ACTUAL_HOST_HERE', document.location.host)
+    </script>
+  </div>
+</body>
+
+</html>
