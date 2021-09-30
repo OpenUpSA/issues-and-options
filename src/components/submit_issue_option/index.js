@@ -111,12 +111,12 @@ export class FinalComponent extends React.Component {
                 </Typography>
               </Box>
 
-              <Box mb={3}>
+              <Box mb={1}>
                 <Typography align="left" variant="h4">
                   Let's get you talking to the right person!
                 </Typography>
               </Box>
-              <Box mb={3}>
+              <Box mb={1}>
                 <Typography align="left" variant="subtitle1">
                   These are the results based on answers you provided:
                 </Typography>
