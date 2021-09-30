@@ -87,7 +87,7 @@ export class PeopleImpact extends React.Component {
                   color="secondary"
                   onClick={() => this.selectedOption('all southafricans')}
                 >
-                  All South Africans
+                  Everyone in South Africa
                 </BasicButton>
               </Box>
             </Box>
