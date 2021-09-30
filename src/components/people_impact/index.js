@@ -37,7 +37,7 @@ export class PeopleImpact extends React.Component {
               <img
                 src={`${process.env.PUBLIC_URL}/assets/app-images/question-img.svg`}
                 alt=""
-                style={{ width: "100%", height: "184px", padding: "2px" }} />
+                style={{ width: "100%", padding: "0px" }} />
             </ImageList>
           </Box>
         </Grid>
@@ -47,7 +47,7 @@ export class PeopleImpact extends React.Component {
             display="flex"
             alignItems="flex-start"
             flexDirection="column"
-            p={6}
+            p={1}
           >
             <Box mb={1}>
               <BackButton
@@ -87,7 +87,7 @@ export class PeopleImpact extends React.Component {
                   color="secondary"
                   onClick={() => this.selectedOption('all southafricans')}
                 >
-                  All South Africans
+                  Everyone in South Africa
                 </BasicButton>
               </Box>
             </Box>

@@ -47,7 +47,7 @@ export class IssueImpact extends React.Component {
               <img
                 src={`${process.env.PUBLIC_URL}/assets/app-images/question-img.svg`}
                 alt=""
-                style={{ width: "100%", height: "184px", padding: "2px" }} />
+                style={{ width: "100%", padding: "0px" }} />
             </ImageList>
           </Box>
         </Grid>
@@ -57,7 +57,7 @@ export class IssueImpact extends React.Component {
             display="flex"
             alignItems="flex-start"
             flexDirection="column"
-            p={6}
+            p={1}
           >
             <Box mb={1}>
               <BackButton
