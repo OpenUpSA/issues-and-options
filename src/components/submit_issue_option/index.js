@@ -77,13 +77,13 @@ export class FinalComponent extends React.Component {
             display="flex"
             alignItems="flex-center"
             flexDirection="column"
-            p={6}
+            p={1}
           >
             <ImageList sx={{ width: 100, height: 100 }}>
               <img
                 src={`${process.env.PUBLIC_URL}/assets/app-images/question-img.svg`}
                 alt=""
-                style={{ width: "100%", height: "184px", padding: "2px" }} />
+                style={{ width: "100%", padding: "0px" }} />
             </ImageList>
           </Box>
         </Grid>
@@ -94,7 +94,7 @@ export class FinalComponent extends React.Component {
               display="flex"
               alignItems="flex-start"
               flexDirection="column"
-              p={6}
+              p={1}
             >
               <Box mb={1}>
                 <BackButton
@@ -148,7 +148,7 @@ export class FinalComponent extends React.Component {
                 <Grid item md={6} xs={12}>
                   <Box mb={3}>
                     <Typography align="left" variant="body1">
-                      Who to contact in what order:
+                      Who to contact, in which order:
                     </Typography>
                   </Box>
                 </Grid>
