@@ -6,15 +6,13 @@ import ArrowBack from '@material-ui/icons/ArrowBack';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { styled } from '@material-ui/styles';
 import React from 'react';
+import ReactGA from 'react-ga';
 import data from '../../data/data.json';
 import HTMLRender from '../html-renderer';
 import RepLocator from '../Rep-Locator';
 import { BackButton, UsefulLinkButton } from '../utils/Buttons';
 
 export class FinalComponent extends React.Component {
-  state = {
-    expanded: false
-  }
 
   continue = e => {
     e.preventDefault();
@@ -30,13 +28,25 @@ export class FinalComponent extends React.Component {
     this.props.goToStep(i);
   };
 
-  handleChange = (panel) => (event, isExpanded) => {
+  handleChange = (panel, key) => (event, isExpanded) => {
     event.preventDefault();
-    this.setState({ expanded: isExpanded ? panel : false });
+    const label = `${key['What does your issue most closely relate to?']} - ${key['Who']}`
+    if (isExpanded) {
+      ReactGA.event({
+        category: 'Option',
+        action: 'Expand',
+        label,
+      });
+    } else {
+      ReactGA.event({
+        category: 'Option',
+        action: 'Collapse',
+        label
+      });
+    }
   };
 
   render() {
-    const { expanded } = this.state;
     const { personAffected, issuesAffected } = this.props.values;
     const entities = data[personAffected][issuesAffected]
       ? data[personAffected][issuesAffected].sort(function (a, b) {
@@ -167,11 +177,10 @@ export class FinalComponent extends React.Component {
               {entities && entities.map((key, i) => (
                 <Box mb={1}
                   key={key['Priority']}
-                  style={{ width: "100%"}}
+                  style={{ width: "100%" }}
                 >
                   <Accordion
-                    expanded={expanded === i}
-                    onChange={this.handleChange(i)}
+                    onChange={this.handleChange(i, key)}
                   >
                     <AccordionSummary
                       expandIcon={<ExpandMoreIcon />}
@@ -197,7 +206,7 @@ export class FinalComponent extends React.Component {
                       >
                         {
                           repLocator.includes(key['Option type'])
-                            ? <RepLocator who={key['Option type']} />
+                            ? <RepLocator issue={key} />
                             : <HTMLRender issue={key} />
                         }
                         <Typography align="left" variant="body2">
