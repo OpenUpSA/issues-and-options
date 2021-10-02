@@ -21,7 +21,8 @@ export default class HTMLRender extends Component {
     this.state = {
       address: "",
       municipal_addresses_found: [],
-      mayor_addresses_found: []
+      mayor_addresses_found: {},
+      mayor_contacts_found: []
     };
   }
 
@@ -65,43 +66,48 @@ export default class HTMLRender extends Component {
 
   onMayorValueChange = event => {
     const address = event.target.value;
-    this.setState({ [event.target.name]: address }, () => {
+    this.setState({ [event.target.name]: address, mayor_contacts_found: [] }, () => {
       address && fetch('https://mapit.code4sa.org/address?partial=1&generation=2&type=MN&address=' + address)
         .then(response => response.json())
         .then(response => {
           if (response && response.addresses.length > 0) {
-            const muniCodeRef = response.addresses[0].areas[0];
-            const muniCode = response[muniCodeRef].codes.MDB;
-            fetch('https://municipaldata.treasury.gov.za/api/cubes/officials/facts?cut=municipality.demarcation_code:' + muniCode)
-              .then(response => response.json())
-              .then(response => {
-                if (response && response.data.length > 0) {
-                  const roles = ["Mayor/Executive Mayor", "Secretary of Mayor/Executive Mayor"]
-                  const contactDetails = response.data.filter(item => roles.includes(item['role.role']));
-                  const contacts = []
-                  for (const contactDetail of contactDetails) {
-                    const phoneNumber = contactDetail['contact_details.phone_number'];
-                    const emailAddress = contactDetail['contact_details.email_address'];
-                    const name = contactDetail['contact_details.name'];
-                    const title = contactDetail['contact_details.title'];
-                    const role = contactDetail['role.role'];
-                    contacts.push({
-                      phoneNumber,
-                      emailAddress,
-                      name,
-                      title,
-                      role
-                    });
-                  }
-                  this.setState({
-                    mayor_addresses_found: [...contacts]
-                  })
-
-                }
-              });
+            this.setState({
+              mayor_addresses_found: response
+            })
           }
         });
     })
+  }
+
+  showMayorAddress = (address, mayorAddress) => () => {
+    const muniCodeRef = address.areas[0];
+    const muniCode = mayorAddress[muniCodeRef].codes.MDB;
+    fetch('https://municipaldata.treasury.gov.za/api/cubes/officials/facts?cut=municipality.demarcation_code:' + muniCode)
+      .then(response => response.json())
+      .then(response => {
+        if (response && response.data.length > 0) {
+          const roles = ["Mayor/Executive Mayor", "Secretary of Mayor/Executive Mayor"]
+          const contactDetails = response.data.filter(item => roles.includes(item['role.role']));
+          const contacts = []
+          for (const contactDetail of contactDetails) {
+            const phoneNumber = contactDetail['contact_details.phone_number'];
+            const emailAddress = contactDetail['contact_details.email_address'];
+            const name = contactDetail['contact_details.name'];
+            const title = contactDetail['contact_details.title'];
+            const role = contactDetail['role.role'];
+            contacts.push({
+              phoneNumber,
+              emailAddress,
+              name,
+              title,
+              role
+            });
+          }
+          this.setState({
+            mayor_contacts_found: [...contacts]
+          })
+        }
+      });
   }
 
 
@@ -168,6 +174,10 @@ export default class HTMLRender extends Component {
         )
 
       case 'Mayor':
+        const addresses = this.state.mayor_addresses_found.addresses
+          ? this.state.mayor_addresses_found.addresses
+          : [];
+        const mayorAddress = this.state.mayor_addresses_found;
         return (
           <>
             <FormControl fullWidth
@@ -183,9 +193,26 @@ export default class HTMLRender extends Component {
                 onChange={this.onMayorValueChange}
               />
             </FormControl>
-            {<List>
+            <List>
               {
-                this.state.mayor_addresses_found.map(address => (
+                addresses.map(address => (
+                  <div key={address.formatted_address}>
+                    <ListItem>
+                      <p
+                        style={{ textDecorationLine: 'underline' }}
+                        title="Click to show Mayor contact details"
+                        onClick={this.showMayorAddress(address, mayorAddress)}
+                      >
+                        {address.formatted_address}
+                      </p>
+                    </ListItem>
+                  </div>
+                ))
+              }
+            </List>
+            <List>
+              {
+                this.state.mayor_contacts_found.map(address => (
                   <div key={address.name}>
                     <ListItem>
                       <u>{address.role}</u>
@@ -195,7 +222,9 @@ export default class HTMLRender extends Component {
                     </ListItem>
                     <ListItem>
                       <LocalPhoneOutlined /> Phone Number:
-                      <a href={`tel:${address.phoneNumber}`}>
+                      <a href={`tel:${address.phoneNumber}`}
+                        onClick={onClickReplocatorLink(option)}
+                      >
                         {address.phoneNumber}
                       </a>
                     </ListItem>
@@ -208,7 +237,7 @@ export default class HTMLRender extends Component {
                   </div>
                 ))
               }
-            </List>}
+            </List>
           </>
         )
       default:
