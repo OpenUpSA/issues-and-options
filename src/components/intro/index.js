@@ -1,11 +1,17 @@
 import { Box, ImageList, Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import React from 'react';
+import ReactGA from 'react-ga';
 import { GetStartedButton, UsefulLinkButton } from '../utils/Buttons';
 
 class Intro extends React.Component {
   continue = e => {
     e.preventDefault();
+    ReactGA.event({
+      category: 'Question Answer',
+      action: 'Get started',
+      label: 'Get started'
+    });
     this.props.nextStep();
   };
   render() {
@@ -25,7 +31,7 @@ class Intro extends React.Component {
             display="flex"
             alignItems="flex-center"
             flexDirection="column"
-            p={6}
+            p={1}
           >
             <ImageList sx={{ width: 100, height: 100 }}>
               <img
@@ -35,7 +41,7 @@ class Intro extends React.Component {
                     : `${process.env.PUBLIC_URL}/assets/app-images/issues-img.svg`
                 }
                 alt=""
-                style={{ width: "100%", height: "184px", padding: "2px" }} />
+                style={{ width: "100%", padding: "0px" }} />
             </ImageList>
           </Box>
         </Grid>
@@ -51,7 +57,7 @@ class Intro extends React.Component {
                 display="flex"
                 alignItems="flex-start"
                 flexDirection="column"
-                p={6}
+                p={1}
               >
                 <Box mb={2}>
                   <Typography align="left" variant="h4">
@@ -75,7 +81,7 @@ class Intro extends React.Component {
                 display="flex"
                 alignItems="flex-start"
                 flexDirection="column"
-                p={6}
+                p={1}
               >
                 <Typography align="left" variant="subtitle1">
                   Useful links:

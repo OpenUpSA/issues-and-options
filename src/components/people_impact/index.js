@@ -1,6 +1,7 @@
 import { Box, Grid, ImageList, Typography } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import React from 'react';
+import ReactGA from 'react-ga';
 import { BackButton, BasicButton } from '../utils/Buttons';
 
 
@@ -14,6 +15,11 @@ export class PeopleImpact extends React.Component {
   selectedOption = (option) => {
     this.props.values.personAffected = option;
     this.props.nextStep();
+    ReactGA.event({
+      category: 'Question Answer',
+      action: 'How many people are affected',
+      label: option
+    });
   };
 
   render() {
@@ -37,7 +43,7 @@ export class PeopleImpact extends React.Component {
               <img
                 src={`${process.env.PUBLIC_URL}/assets/app-images/question-img.svg`}
                 alt=""
-                style={{ width: "100%", height: "184px", padding: "2px" }} />
+                style={{ width: "100%", padding: "0px" }} />
             </ImageList>
           </Box>
         </Grid>
@@ -47,7 +53,7 @@ export class PeopleImpact extends React.Component {
             display="flex"
             alignItems="flex-start"
             flexDirection="column"
-            p={6}
+            p={1}
           >
             <Box mb={1}>
               <BackButton
@@ -87,7 +93,7 @@ export class PeopleImpact extends React.Component {
                   color="secondary"
                   onClick={() => this.selectedOption('all southafricans')}
                 >
-                  All South Africans
+                  Everyone in South Africa
                 </BasicButton>
               </Box>
             </Box>
