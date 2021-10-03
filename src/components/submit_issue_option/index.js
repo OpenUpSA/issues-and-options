@@ -48,8 +48,9 @@ export class FinalComponent extends React.Component {
 
   render() {
     const { personAffected, issuesAffected } = this.props.values;
-    const entities = data[personAffected][issuesAffected]
-      ? data[personAffected][issuesAffected].sort(function (a, b) {
+    const person = personAffected === "everyone in South Africa" ? "all southafricans" : personAffected;
+    const entities = data[person][issuesAffected]
+      ? data[person][issuesAffected].sort(function (a, b) {
         return parseInt(a['Priority']) - parseInt(b['Priority']);
       })
       : []
@@ -141,7 +142,7 @@ export class FinalComponent extends React.Component {
                     title="How many people does your issue affect?"
                     onClick={() => this.goToStep(2)}
                   >
-                    {personAffected}
+                    Who is affected: {personAffected}
                   </UsefulLinkButton>
                 </Box>
                 <Box mb={3}>
@@ -155,24 +156,13 @@ export class FinalComponent extends React.Component {
               </Box>
 
               <Grid container>
-                <Grid item md={6} xs={12}>
-                  <Box mb={3}>
-                    <Typography align="left" variant="body1">
-                      Who to contact, in which order:
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item md={6} xs={12}>
-                  <Box mb={3}>
-                    <Typography align="left" variant="subtitle1">
-                      <a
-                        href="/"
-                        style={{ textDecorationLine: 'underline', color: '#FFFFFF' }}>
-                        Why is it important to escalate in this order?
-                      </a>
-                    </Typography>
-                  </Box>
-                </Grid>
+                {/* <Grid item md={6} xs={12}> */}
+                <Box mb={3}>
+                  <Typography align="left" variant="body1">
+                    Who to contact, in which order:
+                  </Typography>
+                </Box>
+                {/* </Grid> */}
               </Grid>
               {entities && entities.map((key, i) => (
                 <Box mb={1}
@@ -217,6 +207,20 @@ export class FinalComponent extends React.Component {
                   </Accordion>
                 </Box>
               ))}
+              <Box
+                display="flex"
+                mb={3}
+              >
+                <UsefulLinkButton>
+                  <a href="https://docs.google.com/forms/d/e/1FAIpQLSfH1bgZDIuhGimksQERtdO2L5F-umuWdNIEQQsKtFcLvxmi4Q/viewform"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: '#FFFFFF', textDecoration: 'none' }}
+                  >
+                    Was this helpful?
+                  </a>
+                </UsefulLinkButton>
+              </Box>
             </Box>
           </div>
         </Grid>

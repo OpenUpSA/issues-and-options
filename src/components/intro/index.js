@@ -84,20 +84,24 @@ class Intro extends React.Component {
                 p={1}
               >
                 <Typography align="left" variant="subtitle1">
-                  Useful links:
+                  Shortcuts:
                 </Typography>
                 <Box mb={1}>
-                  <UsefulLinkButton>Find my local representative
+                  <UsefulLinkButton>
+                    <a href="https://www.pa.org.za/write/"
+                      style={{ color: '#FFFFFF', textDecoration: 'none' }}
+                    >
+                      Write to an MP
+                    </a>
                   </UsefulLinkButton>
                 </Box>
                 <Box mb={1}>
                   <UsefulLinkButton>
-                    Learn about the structures of government
-                  </UsefulLinkButton>
-                </Box>
-                <Box mb={1}>
-                  <UsefulLinkButton>
-                    See a list of all MPs
+                    <a href="https://www.pa.org.za/write-committees/"
+                      style={{ color: '#FFFFFF', textDecoration: 'none' }}
+                    >
+                      Write to a Parliamentary Committee
+                    </a>
                   </UsefulLinkButton>
                 </Box>
               </Box>

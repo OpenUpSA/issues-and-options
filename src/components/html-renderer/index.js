@@ -126,11 +126,12 @@ export default class HTMLRender extends Component {
             <FormControl fullWidth
               style={{ width: '80%', alignContent: 'center', margin: 'auto' }}
             >
+              <p>Enter your address to find your {option['Who']}</p>
               <TextField
                 fullWidth sx={{ m: 1 }}
                 id="address"
                 name="address"
-                label={`Enter your address to find your ${option['Who']}`}
+                label="Your address or neighbourhood"
                 variant="outlined"
                 value={this.state.address}
                 onChange={this.onMunicpalValueChange}
@@ -183,11 +184,12 @@ export default class HTMLRender extends Component {
             <FormControl fullWidth
               style={{ width: '80%', alignContent: 'center', margin: 'auto' }}
             >
+              <p>Enter your address to find your {option['Who']}</p>
               <TextField
                 fullWidth sx={{ m: 1 }}
                 id="address"
                 name="address"
-                label={`Enter your address to find your ${option['Who']}`}
+                label="Your address or neighbourhood"
                 variant="outlined"
                 value={this.state.address}
                 onChange={this.onMayorValueChange}

@@ -103,35 +103,20 @@ export class IssueImpact extends React.Component {
                 ))}
               </Box>
             </div>
-            <div>
-              <Box
-                display="flex"
-                mb={3}
-              >
-                <Box mb={1} mr={3}>
-                  <UsefulLinkButton>
-                    Show me more areas
-                  </UsefulLinkButton>
-                </Box>
-                <Box mb={1} mr={3}>
-                  <UsefulLinkButton>
-                    I don't see an appropriate area here
-                  </UsefulLinkButton>
-                </Box>
-                <Box mb={1} mr={3}>
-                  <UsefulLinkButton>
-                    I'm not sure
-                  </UsefulLinkButton>
-                </Box>
-              </Box>
-            </div>
-            <Typography align="left" variant="subtitle1">
-              <a
-                href="/"
-                style={{ textDecorationLine: 'underline', color: '#FFFFFF' }}>
-                Why are we asking this question?
-              </a>
-            </Typography>
+            <Box
+              display="flex"
+              mb={3}
+            >
+              <UsefulLinkButton>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSc_U5hOIFRVESwY1STkF5JCHK360DF-DE0Z6pTx7xXBiYhI5A/viewform"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: '#FFFFFF', textDecoration: 'none' }}
+                >
+                  I don't see an appropriate area here
+                </a>
+              </UsefulLinkButton>
+            </Box>
           </Box>
         </Grid>
       </Grid>

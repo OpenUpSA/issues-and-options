@@ -91,19 +91,12 @@ export class PeopleImpact extends React.Component {
                 <BasicButton
                   variant="contained"
                   color="secondary"
-                  onClick={() => this.selectedOption('all southafricans')}
+                  onClick={() => this.selectedOption('everyone in South Africa')}
                 >
                   Everyone in South Africa
                 </BasicButton>
               </Box>
             </Box>
-            <Typography align="left" variant="subtitle1">
-              <a
-                href="/"
-                style={{ textDecorationLine: 'underline', color: '#FFFFFF' }}>
-                Why are we asking this question?
-              </a>
-            </Typography>
           </Box>
         </Grid>
       </Grid>
