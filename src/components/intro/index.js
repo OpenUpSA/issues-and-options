@@ -90,6 +90,8 @@ class Intro extends React.Component {
                   <UsefulLinkButton>
                     <a href="https://www.pa.org.za/write/"
                       style={{ color: '#FFFFFF', textDecoration: 'none' }}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       Write to an MP
                     </a>
@@ -99,6 +101,8 @@ class Intro extends React.Component {
                   <UsefulLinkButton>
                     <a href="https://www.pa.org.za/write-committees/"
                       style={{ color: '#FFFFFF', textDecoration: 'none' }}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       Write to a Parliamentary Committee
                     </a>
