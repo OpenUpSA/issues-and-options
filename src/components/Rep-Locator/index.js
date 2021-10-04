@@ -1,4 +1,4 @@
-import { FormControl, List, ListItem, ListItemText, TextField } from '@material-ui/core';
+import { FormControl, List, ListItem, ListItemText, TextField, Typography } from '@material-ui/core';
 import React, { Component } from 'react';
 import { onClickReplocatorLink } from '../html-renderer';
 
@@ -37,33 +37,34 @@ export default class RepLocator extends Component {
     if (repLocatorFragment) {
       return (
         <>
-          <FormControl fullWidth
-            style={{ width: '80%', alignContent: 'center', margin: 'auto' }}
-          >
+          <FormControl fullWidth>
+            <Typography align="left" variant="subtitle1">
+              1. Enter your address to find your {who}
+            </Typography>
+            <Typography align="left" variant="subtitle1">
+              2. Select your {who} and write them a message about your issue
+            </Typography>
+
             <TextField
               fullWidth sx={{ m: 1 }}
               id="address"
               name="address"
-              label={`Enter your address to find your ${who}`}
+              label="Your address or neighbourhood"
               variant="outlined"
               value={this.state.address}
               onChange={this.onChange}
+              style={{ marginTop: '1rem' }}
             />
           </FormControl>
           <List>
             {
               addresses_found.map(address => (
                 <ListItem key={address.lat}>
-                  <a
-                    href={`https://www.pa.org.za/place/latlon/${address.lat},${address.lng}/?#${repLocatorFragment}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="Click to open.">
-                    <ListItemText
-                      id="replocatorLink"
-                      onClick={onClickReplocatorLink(issue)}
-                      primary={address.formatted_address} />
-                  </a>
+                  <ListItemText
+                    id="replocatorLink"
+                    style={{ cursor: 'pointer', color: 'blue', textDecoration: 'underline', fontWeight: 'bold' }}
+                    onClick={onClickReplocatorLink(issue, `https://www.pa.org.za/place/latlon/${address.lat},${address.lng}/?#${repLocatorFragment}`)}
+                    primary={address.formatted_address} />
                 </ListItem>
               ))
             }

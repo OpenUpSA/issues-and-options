@@ -48,8 +48,9 @@ export class FinalComponent extends React.Component {
 
   render() {
     const { personAffected, issuesAffected } = this.props.values;
-    const entities = data[personAffected][issuesAffected]
-      ? data[personAffected][issuesAffected].sort(function (a, b) {
+    const person = personAffected === "everyone in South Africa" ? "all southafricans" : personAffected;
+    const entities = data[person][issuesAffected]
+      ? data[person][issuesAffected].sort(function (a, b) {
         return parseInt(a['Priority']) - parseInt(b['Priority']);
       })
       : []
@@ -141,7 +142,7 @@ export class FinalComponent extends React.Component {
                     title="How many people does your issue affect?"
                     onClick={() => this.goToStep(2)}
                   >
-                    {personAffected}
+                    Who is affected: {personAffected}
                   </UsefulLinkButton>
                 </Box>
                 <Box mb={3}>
@@ -155,68 +156,89 @@ export class FinalComponent extends React.Component {
               </Box>
 
               <Grid container>
-                <Grid item md={6} xs={12}>
-                  <Box mb={3}>
-                    <Typography align="left" variant="body1">
-                      Who to contact, in which order:
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item md={6} xs={12}>
-                  <Box mb={3}>
-                    <Typography align="left" variant="subtitle1">
-                      <a
-                        href="/"
-                        style={{ textDecorationLine: 'underline', color: '#FFFFFF' }}>
-                        Why is it important to escalate in this order?
-                      </a>
-                    </Typography>
-                  </Box>
-                </Grid>
+                <Box mb={3}>
+                  <Typography align="left" variant="body1">
+                    Who to contact, in which order:
+                  </Typography>
+                </Box>
               </Grid>
               {entities && entities.map((key, i) => (
                 <Box mb={1}
                   key={key['Priority']}
                   style={{ width: "100%" }}
                 >
-                  <Accordion
-                    onChange={this.handleChange(i, key)}
-                  >
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1a-content"
-                      id="panel1a-header"
+                  <div>
+                    <Accordion
+                      onChange={this.handleChange(i, key)}
                     >
-                      <Box>
-                        <AccordionNumberMarker>
-                          {i + 1}
-                        </AccordionNumberMarker>
-                      </Box>
-                      <Box ml={6}>
-                        <Typography>
-                          {key['Who']}
-                        </Typography>
-                      </Box>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Box
-                        display="flex"
-                        alignItems="flex-start"
-                        flexDirection="column"
+                      <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1a-content"
+                        id="panel1a-header"
                       >
-                        {
-                          repLocator.includes(key['Option type'])
-                            ? <RepLocator issue={key} />
-                            : <HTMLRender issue={key} />
-                        }
-                        <Typography align="left" variant="body2">
-                          {key['Why should they help?']}
-                        </Typography>
-                      </Box>
-                    </AccordionDetails>
-                  </Accordion>
+                        <Box>
+                          <AccordionNumberMarker>
+                            {i + 1}
+                          </AccordionNumberMarker>
+                        </Box>
+                        <Box ml={6}>
+                          <Typography>
+                            {key['Who']}
+                          </Typography>
+                        </Box>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <Box
+                          display="flex"
+                          alignItems="flex-start"
+                          flexDirection="column"
+                        >
+                          <Box
+                            style={{
+                              background: '#eae8e8',
+                              width: '90%',
+                              margin: 'auto',
+                              borderRadius: '4px',
+                              wordWrap: 'break-word',
+                              padding: '8px'
+                            }}
+                          >
+                            {
+                              repLocator.includes(key['Option type'])
+                                ? <RepLocator issue={key} />
+                                : <HTMLRender issue={key} />
+                            }
+                          </Box>
+                          <Box mt={3}>
+                            <Typography align="left" variant="body2">
+                              {key['Why should they help?']}
+                            </Typography>
+                          </Box>
+                        </Box>
+                      </AccordionDetails>
+                    </Accordion>
+                  </div>
                 </Box>
               ))}
+              <Box
+                display="flex"
+                mb={3}
+              >
+                <UsefulLinkButton>
+                  <a href="https://docs.google.com/forms/d/e/1FAIpQLSfH1bgZDIuhGimksQERtdO2L5F-umuWdNIEQQsKtFcLvxmi4Q/viewform"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: '#FFFFFF', textDecoration: 'none' }}
+                    onClick={() => ReactGA.event({
+                      category: 'Option',
+                      action: 'Feedback',
+                      label: 'Open feedback form'
+                    })}
+                  >
+                    Was this helpful?
+                  </a>
+                </UsefulLinkButton>
+              </Box>
             </Box>
           </div>
         </Grid>
