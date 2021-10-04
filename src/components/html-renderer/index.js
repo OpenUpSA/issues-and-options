@@ -125,7 +125,8 @@ export default class HTMLRender extends Component {
   getHtml(option) {
     switch (option['Option type']) {
       case 'National Department':
-        return (
+      return (
+        <Typography>
           <p>
             Find contact details for the {option['Who']} at {' '}
             <a
@@ -135,7 +136,8 @@ export default class HTMLRender extends Component {
               onClick={this.onClickLink(option['Option data'])}
             >{option['Option data']}</a>
           </p>
-        )
+        </Typography>
+      )
 
       case 'Municipal Department':
         return (
@@ -352,7 +354,11 @@ export default class HTMLRender extends Component {
           </>
         )
       default:
-        return <div dangerouslySetInnerHTML={{ __html: option['Option data'] }} />;
+      return (
+        <Typography align="left">
+          <div dangerouslySetInnerHTML={{ __html: option['Option data'] }} />
+        </Typography>
+      );
     }
   }
 
