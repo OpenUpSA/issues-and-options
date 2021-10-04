@@ -112,6 +112,11 @@ export class IssueImpact extends React.Component {
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{ color: '#FFFFFF', textDecoration: 'none' }}
+                  onClick={() => ReactGA.event({
+                    category: 'Question Answer',
+                    action: 'Feedback',
+                    label: 'No relevant option'
+                  })}
                 >
                   I don't see an appropriate area here
                 </a>

@@ -194,14 +194,26 @@ export class FinalComponent extends React.Component {
                         alignItems="flex-start"
                         flexDirection="column"
                       >
-                        {
-                          repLocator.includes(key['Option type'])
-                            ? <RepLocator issue={key} />
-                            : <HTMLRender issue={key} />
-                        }
-                        <Typography align="left" variant="body2">
-                          {key['Why should they help?']}
-                        </Typography>
+                        <Box
+                          p={3}
+                          style={{
+                            background: '#eae8e8',
+                            width: '82%',
+                            margin: 'auto',
+                            borderRadius: '4px',
+                          }}
+                        >
+                          {
+                            repLocator.includes(key['Option type'])
+                              ? <RepLocator issue={key} />
+                              : <HTMLRender issue={key} />
+                          }
+                        </Box>
+                        <Box mt={3}>
+                          <Typography align="left" variant="body2">
+                            {key['Why should they help?']}
+                          </Typography>
+                        </Box>
                       </Box>
                     </AccordionDetails>
                   </Accordion>
@@ -216,6 +228,11 @@ export class FinalComponent extends React.Component {
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{ color: '#FFFFFF', textDecoration: 'none' }}
+                    onClick={() => ReactGA.event({
+                      category: 'Option',
+                      action: 'Feedback',
+                      label: 'Open feedback form'
+                    })}
                   >
                     Was this helpful?
                   </a>

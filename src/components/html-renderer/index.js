@@ -1,4 +1,4 @@
-import { FormControl, List, ListItem, TextField } from '@material-ui/core';
+import { FormControl, List, ListItem, TextField, Typography } from '@material-ui/core';
 import { Business, Label, Language, LocalPhoneOutlined } from '@material-ui/icons';
 import React, { Component } from 'react';
 import ReactGA from 'react-ga';
@@ -110,23 +110,37 @@ export default class HTMLRender extends Component {
       });
   }
 
+  onClickLink = (link) => {
+    ReactGA.event({
+      category: 'Option',
+      action: 'Option website link click',
+      label: link
+    });
+  }
+
 
   getHtml(option) {
     switch (option['Option type']) {
       case 'National Department':
         return (
           <p>
-            Find contact details for the {option['Who']} at <a href={option['Option data']}>{option['Option data']}</a>
+            Find contact details for the {option['Who']} at
+            <a
+              href={option['Option data']}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={this.onClickLink(option['Option data'])}
+            >{option['Option data']}</a>
           </p>
         )
 
       case 'Municipal Department':
         return (
           <>
-            <FormControl fullWidth
-              style={{ width: '80%', alignContent: 'center', margin: 'auto' }}
-            >
-              <p>Enter your address to find your {option['Who']}</p>
+            <FormControl fullWidth>
+              <Typography align="left" variant="subtitle1">
+                Enter your address to find your {option['Who']}
+              </Typography>
               <TextField
                 fullWidth sx={{ m: 1 }}
                 id="address"
@@ -181,10 +195,10 @@ export default class HTMLRender extends Component {
         const mayorAddress = this.state.mayor_addresses_found;
         return (
           <>
-            <FormControl fullWidth
-              style={{ width: '80%', alignContent: 'center', margin: 'auto' }}
-            >
-              <p>Enter your address to find your {option['Who']}</p>
+            <FormControl fullWidth>
+              <Typography align="left" variant="subtitle1">
+                Enter your address to find your {option['Who']}
+              </Typography>
               <TextField
                 fullWidth sx={{ m: 1 }}
                 id="address"

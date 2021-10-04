@@ -1,4 +1,4 @@
-import { FormControl, List, ListItem, ListItemText, TextField } from '@material-ui/core';
+import { FormControl, List, ListItem, ListItemText, TextField, Typography } from '@material-ui/core';
 import React, { Component } from 'react';
 import { onClickReplocatorLink } from '../html-renderer';
 
@@ -37,10 +37,14 @@ export default class RepLocator extends Component {
     if (repLocatorFragment) {
       return (
         <>
-          <FormControl fullWidth
-            style={{ width: '80%', alignContent: 'center', margin: 'auto' }}
-          >
-            <p>Enter your address to find your {who}</p>
+          <FormControl fullWidth>
+            <Typography align="left" variant="subtitle1">
+              1. Enter your address to find your {who}
+            </Typography>
+            <Typography align="left" variant="subtitle1">
+              2. Select your {who} and write them a message about your issue
+            </Typography>
+
             <TextField
               fullWidth sx={{ m: 1 }}
               id="address"
