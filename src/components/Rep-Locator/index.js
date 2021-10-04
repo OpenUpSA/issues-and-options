@@ -53,22 +53,18 @@ export default class RepLocator extends Component {
               variant="outlined"
               value={this.state.address}
               onChange={this.onChange}
+              style={{ marginTop: '1rem' }}
             />
           </FormControl>
           <List>
             {
               addresses_found.map(address => (
                 <ListItem key={address.lat}>
-                  <a
-                    href={`https://www.pa.org.za/place/latlon/${address.lat},${address.lng}/?#${repLocatorFragment}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="Click to open.">
-                    <ListItemText
-                      id="replocatorLink"
-                      onClick={onClickReplocatorLink(issue)}
-                      primary={address.formatted_address} />
-                  </a>
+                  <ListItemText
+                    id="replocatorLink"
+                    style={{ cursor: 'pointer', color: 'blue', textDecoration: 'underline', fontWeight: 'bold' }}
+                    onClick={onClickReplocatorLink(issue, `https://www.pa.org.za/place/latlon/${address.lat},${address.lng}/?#${repLocatorFragment}`)}
+                    primary={address.formatted_address} />
                 </ListItem>
               ))
             }

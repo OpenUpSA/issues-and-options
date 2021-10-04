@@ -1,10 +1,10 @@
-import { FormControl, List, ListItem, TextField, Typography } from '@material-ui/core';
+import { Box, FormControl, Grid, List, ListItem, TextField, Typography } from '@material-ui/core';
 import { Business, Label, Language, LocalPhoneOutlined } from '@material-ui/icons';
 import React, { Component } from 'react';
 import ReactGA from 'react-ga';
 
 
-export const onClickReplocatorLink = (issue) => (e) => {
+export const onClickReplocatorLink = (issue, link) => (e) => {
   e.preventDefault();
   const label = `${issue['What does your issue most closely relate to?']} - ${issue['Who']}`
   ReactGA.event({
@@ -12,6 +12,9 @@ export const onClickReplocatorLink = (issue) => (e) => {
     action: 'Action new tab',
     label
   });
+  if (link) {
+    window.open(link, '_blank');
+  }
 }
 
 
@@ -124,7 +127,7 @@ export default class HTMLRender extends Component {
       case 'National Department':
         return (
           <p>
-            Find contact details for the {option['Who']} at
+            Find contact details for the {option['Who']} at {' '}
             <a
               href={option['Option data']}
               target="_blank"
@@ -141,45 +144,98 @@ export default class HTMLRender extends Component {
               <Typography align="left" variant="subtitle1">
                 Enter your address to find your {option['Who']}
               </Typography>
-              <TextField
-                fullWidth sx={{ m: 1 }}
-                id="address"
-                name="address"
-                label="Your address or neighbourhood"
-                variant="outlined"
-                value={this.state.address}
-                onChange={this.onMunicpalValueChange}
-              />
+              <Box
+                mt={3}>
+                <TextField
+                  fullWidth sx={{ m: 1 }}
+                  id="address"
+                  name="address"
+                  label="Your address or neighbourhood"
+                  variant="outlined"
+                  value={this.state.address}
+                  onChange={this.onMunicpalValueChange}
+                />
+              </Box>
             </FormControl>
             <List>
               {
                 this.state.municipal_addresses_found.map(address => (
                   <div key={address.longName}>
                     <ListItem>
-                      <Label /> Name: {address.longName}
+                      <Grid container spacing={1}>
+                        <Grid item xs={12} sm={6}>
+                          <Typography align="left" variant="subtitle1">
+                            <Label /> Name:
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <Typography align="left" variant="subtitle1">
+                            {address.longName}
+                          </Typography>
+                        </Grid>
+                      </Grid>
                     </ListItem>
                     <ListItem>
-                      <LocalPhoneOutlined /> Phone Number:
-                      <a
-                        href={`tel:${address.phoneNumber}`}
-                        onClick={onClickReplocatorLink(option)}
-                      >
-                        {address.phoneNumber}
-                      </a>
+                      <Grid container spacing={1}>
+                        <Grid item xs={12} sm={6}>
+                          <Typography align="left" variant="subtitle1">
+                            <LocalPhoneOutlined />
+                            <span>
+                              Phone Number:
+                            </span>
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <span>
+                            <a
+                              href={`tel:${address.phoneNumber}`}
+                              onClick={onClickReplocatorLink(option, null)}
+                            >
+                              {address.phoneNumber}
+                            </a>
+                          </span>
+                        </Grid>
+                      </Grid>
                     </ListItem>
                     <ListItem>
-                      <Language /> Website Url:
-                      <a href={address.url} target="_blank" rel="noreferrer">
-                        {address.url}
-                      </a>
+                      <Grid container spacing={1}>
+                        <Grid item xs={12} sm={6}>
+                          <Typography align="left" variant="subtitle1">
+                            <Language />
+                            <span>
+                              Website Url:
+                            </span>
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <span>
+                            <a href={address.url} target="_blank" rel="noreferrer">
+                              {address.url}
+                            </a>
+                          </span>
+                        </Grid>
+                      </Grid>
                     </ListItem>
                     <ListItem>
-                      <Business /> Street Address:
-                      <a href={`https://maps.google.com/?q=${address.streetAddress}`}
-                        target="_blank"
-                        rel="noreferrer">
-                        {address.streetAddress}
-                      </a>
+                      <Grid container spacing={1}>
+                        <Grid item xs={12} sm={6}>
+                          <Typography align="left" variant="subtitle1">
+                            <Business />
+                            <span>
+                              Street Address:
+                            </span>
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <span>
+                            <a href={`https://maps.google.com/?q=${address.streetAddress}`}
+                              target="_blank"
+                              rel="noreferrer">
+                              {address.streetAddress}
+                            </a>
+                          </span>
+                        </Grid>
+                      </Grid>
                     </ListItem>
                   </div>
                 ))
@@ -199,28 +255,31 @@ export default class HTMLRender extends Component {
               <Typography align="left" variant="subtitle1">
                 Enter your address to find your {option['Who']}
               </Typography>
-              <TextField
-                fullWidth sx={{ m: 1 }}
-                id="address"
-                name="address"
-                label="Your address or neighbourhood"
-                variant="outlined"
-                value={this.state.address}
-                onChange={this.onMayorValueChange}
-              />
+              <Box
+                mt={3}>
+                <TextField
+                  fullWidth sx={{ m: 1 }}
+                  id="address"
+                  name="address"
+                  label="Your address or neighbourhood"
+                  variant="outlined"
+                  value={this.state.address}
+                  onChange={this.onMayorValueChange}
+                />
+              </Box>
             </FormControl>
             <List>
               {
                 addresses.map(address => (
                   <div key={address.formatted_address}>
                     <ListItem>
-                      <p
-                        style={{ textDecorationLine: 'underline' }}
+                      <Typography
+                        style={{ cursor: 'pointer', color: 'blue', textDecoration: 'underline' }}
                         title="Click to show Mayor contact details"
                         onClick={this.showMayorAddress(address, mayorAddress)}
                       >
                         {address.formatted_address}
-                      </p>
+                      </Typography>
                     </ListItem>
                   </div>
                 ))
@@ -231,24 +290,60 @@ export default class HTMLRender extends Component {
                 this.state.mayor_contacts_found.map(address => (
                   <div key={address.name}>
                     <ListItem>
-                      <u>{address.role}</u>
+                      <Typography align="left" variant="subtitle1">
+                        {address.role}
+                      </Typography>
                     </ListItem>
                     <ListItem>
-                      <Label /> Name: {address.title} {address.name}
+                      <Grid container spacing={1}>
+                        <Grid item xs={12} sm={6}>
+                          <Label />
+                          <span>
+                            Name:
+                          </span>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <span>
+                            {address.title} {address.name}
+                          </span>
+                        </Grid>
+                      </Grid>
                     </ListItem>
                     <ListItem>
-                      <LocalPhoneOutlined /> Phone Number:
-                      <a href={`tel:${address.phoneNumber}`}
-                        onClick={onClickReplocatorLink(option)}
-                      >
-                        {address.phoneNumber}
-                      </a>
+                      <Grid container spacing={1}>
+                        <Grid item xs={12} sm={6}>
+                          <LocalPhoneOutlined />
+                          <span>
+                            Phone Number:
+                          </span>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <span>
+                            <a href={`tel:${address.phoneNumber}`}
+                              onClick={onClickReplocatorLink(option, null)}
+                            >
+                              {address.phoneNumber}
+                            </a>
+                          </span>
+                        </Grid>
+                      </Grid>
                     </ListItem>
                     <ListItem>
-                      <Language /> Email Address:
-                      <a href={`mailto:${address.emailAddress}`}>
-                        {address.emailAddress}
-                      </a>
+                      <Grid container spacing={1}>
+                        <Grid item xs={12} sm={6}>
+                          <Language />
+                          <span>
+                            Email Address:
+                          </span>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <span>
+                            <a href={`mailto:${address.emailAddress}`}>
+                              {address.emailAddress}
+                            </a>
+                          </span>
+                        </Grid>
+                      </Grid>
                     </ListItem>
                   </div>
                 ))

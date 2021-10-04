@@ -156,67 +156,68 @@ export class FinalComponent extends React.Component {
               </Box>
 
               <Grid container>
-                {/* <Grid item md={6} xs={12}> */}
                 <Box mb={3}>
                   <Typography align="left" variant="body1">
                     Who to contact, in which order:
                   </Typography>
                 </Box>
-                {/* </Grid> */}
               </Grid>
               {entities && entities.map((key, i) => (
                 <Box mb={1}
                   key={key['Priority']}
                   style={{ width: "100%" }}
                 >
-                  <Accordion
-                    onChange={this.handleChange(i, key)}
-                  >
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1a-content"
-                      id="panel1a-header"
+                  <div>
+                    <Accordion
+                      onChange={this.handleChange(i, key)}
                     >
-                      <Box>
-                        <AccordionNumberMarker>
-                          {i + 1}
-                        </AccordionNumberMarker>
-                      </Box>
-                      <Box ml={6}>
-                        <Typography>
-                          {key['Who']}
-                        </Typography>
-                      </Box>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Box
-                        display="flex"
-                        alignItems="flex-start"
-                        flexDirection="column"
+                      <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1a-content"
+                        id="panel1a-header"
                       >
-                        <Box
-                          p={3}
-                          style={{
-                            background: '#eae8e8',
-                            width: '82%',
-                            margin: 'auto',
-                            borderRadius: '4px',
-                          }}
-                        >
-                          {
-                            repLocator.includes(key['Option type'])
-                              ? <RepLocator issue={key} />
-                              : <HTMLRender issue={key} />
-                          }
+                        <Box>
+                          <AccordionNumberMarker>
+                            {i + 1}
+                          </AccordionNumberMarker>
                         </Box>
-                        <Box mt={3}>
-                          <Typography align="left" variant="body2">
-                            {key['Why should they help?']}
+                        <Box ml={6}>
+                          <Typography>
+                            {key['Who']}
                           </Typography>
                         </Box>
-                      </Box>
-                    </AccordionDetails>
-                  </Accordion>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <Box
+                          display="flex"
+                          alignItems="flex-start"
+                          flexDirection="column"
+                        >
+                          <Box
+                            style={{
+                              background: '#eae8e8',
+                              width: '90%',
+                              margin: 'auto',
+                              borderRadius: '4px',
+                              wordWrap: 'break-word',
+                              padding: '8px'
+                            }}
+                          >
+                            {
+                              repLocator.includes(key['Option type'])
+                                ? <RepLocator issue={key} />
+                                : <HTMLRender issue={key} />
+                            }
+                          </Box>
+                          <Box mt={3}>
+                            <Typography align="left" variant="body2">
+                              {key['Why should they help?']}
+                            </Typography>
+                          </Box>
+                        </Box>
+                      </AccordionDetails>
+                    </Accordion>
+                  </div>
                 </Box>
               ))}
               <Box
