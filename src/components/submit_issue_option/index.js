@@ -28,9 +28,10 @@ export class FinalComponent extends React.Component {
     this.props.goToStep(i);
   };
 
-  handleChange = (panel, key) => (event, isExpanded) => {
+  handleChange = (key, issueAffected) => (event, isExpanded) => {
     event.preventDefault();
-    const label = `${key['What does your issue most closely relate to?']} - ${key['Who']}`
+    const issue = key['What does your issue most closely relate to?']
+    const label = `${issue === '*' ? issueAffected : issue} - ${key['Who']}`
     if (isExpanded) {
       ReactGA.event({
         category: 'Option',
@@ -100,147 +101,143 @@ export class FinalComponent extends React.Component {
         </Grid>
         <Grid item xs={12} md={9}
           style={{ color: '#FFFFFF' }}>
-          <div>
+          <Box
+            display="flex"
+            alignItems="flex-start"
+            flexDirection="column"
+            p={1}
+          >
+            <Box mb={1}>
+              <BackButton
+                variant="outlined"
+                color="primary"
+                onClick={this.back}
+              >
+                <ArrowBack /> Back
+              </BackButton>
+            </Box>
+            <Box mb={1}>
+              <Typography align="left" variant="subtitle1">
+                Your results
+              </Typography>
+            </Box>
+
+            <Box mb={1}>
+              <Typography align="left" variant="h4">
+                Let's get you talking to the right person!
+              </Typography>
+            </Box>
+            <Box mb={1}>
+              <Typography align="left" variant="subtitle1">
+                These are the results based on answers you provided:
+              </Typography>
+            </Box>
+
             <Box
               display="flex"
               alignItems="flex-start"
-              flexDirection="column"
-              p={1}
             >
-              <Box mb={1}>
-                <BackButton
-                  variant="outlined"
-                  color="primary"
-                  onClick={this.back}
+              <Box mb={1} mr={3}>
+                <UsefulLinkButton
+                  title="How many people does your issue affect?"
+                  onClick={() => this.goToStep(2)}
                 >
-                  <ArrowBack /> Back
-                </BackButton>
+                  Who is affected: {personAffected}
+                </UsefulLinkButton>
               </Box>
-              <Box mb={1}>
-                <Typography align="left" variant="subtitle1">
-                  Your results
-                </Typography>
-              </Box>
-
-              <Box mb={1}>
-                <Typography align="left" variant="h4">
-                  Let's get you talking to the right person!
-                </Typography>
-              </Box>
-              <Box mb={1}>
-                <Typography align="left" variant="subtitle1">
-                  These are the results based on answers you provided:
-                </Typography>
-              </Box>
-
-              <Box
-                display="flex"
-                alignItems="flex-start"
-              >
-                <Box mb={1} mr={3}>
-                  <UsefulLinkButton
-                    title="How many people does your issue affect?"
-                    onClick={() => this.goToStep(2)}
-                  >
-                    Who is affected: {personAffected}
-                  </UsefulLinkButton>
-                </Box>
-                <Box mb={3}>
-                  <UsefulLinkButton
-                    title="Which area does your issue most closely relate to?"
-                    onClick={() => this.goToStep(3)}
-                  >
-                    {issuesAffected}
-                  </UsefulLinkButton>
-                </Box>
-              </Box>
-
-              <Grid container>
-                <Box mb={3}>
-                  <Typography align="left" variant="body1">
-                    Who to contact, in which order:
-                  </Typography>
-                </Box>
-              </Grid>
-              {entities && entities.map((key, i) => (
-                <Box mb={1}
-                  key={key['Priority']}
-                  style={{ width: "100%" }}
+              <Box mb={3}>
+                <UsefulLinkButton
+                  title="Which area does your issue most closely relate to?"
+                  onClick={() => this.goToStep(3)}
                 >
-                  <div>
-                    <Accordion
-                      onChange={this.handleChange(i, key)}
-                    >
-                      <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel1a-content"
-                        id="panel1a-header"
-                      >
-                        <Box>
-                          <AccordionNumberMarker>
-                            {i + 1}
-                          </AccordionNumberMarker>
-                        </Box>
-                        <Box ml={6}>
-                          <Typography>
-                            {key['Who']}
-                          </Typography>
-                        </Box>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        <Box
-                          display="flex"
-                          alignItems="flex-start"
-                          flexDirection="column"
-                        >
-                          <Box
-                            style={{
-                              background: '#eae8e8',
-                              width: '90%',
-                              margin: 'auto',
-                              borderRadius: '4px',
-                              wordWrap: 'break-word',
-                              padding: '8px'
-                            }}
-                          >
-                            {
-                              repLocator.includes(key['Option type'])
-                                ? <RepLocator issue={key} />
-                                : <HTMLRender issue={key} />
-                            }
-                          </Box>
-                          <Box mt={3}>
-                            <Typography align="left" variant="body2">
-                              {key['Why should they help?']}
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </AccordionDetails>
-                    </Accordion>
-                  </div>
-                </Box>
-              ))}
-              <Box
-                display="flex"
-                mb={3}
-              >
-                <UsefulLinkButton>
-                  <a href="https://docs.google.com/forms/d/e/1FAIpQLSfH1bgZDIuhGimksQERtdO2L5F-umuWdNIEQQsKtFcLvxmi4Q/viewform"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ color: '#FFFFFF', textDecoration: 'none' }}
-                    onClick={() => ReactGA.event({
-                      category: 'Option',
-                      action: 'Feedback',
-                      label: 'Open feedback form'
-                    })}
-                  >
-                    Was this helpful?
-                  </a>
+                  {issuesAffected}
                 </UsefulLinkButton>
               </Box>
             </Box>
-          </div>
+
+            <Grid container>
+              <Box mb={3}>
+                <Typography align="left" variant="body1">
+                  Who to contact, in which order:
+                </Typography>
+              </Box>
+            </Grid>
+            {entities && entities.map((key, index) => (
+              <Box mb={1}
+                key={key['Priority']}
+                style={{ width: "100%" }}
+              >
+                <Accordion
+                  onChange={this.handleChange(key, issuesAffected)}
+                >
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Box>
+                      <AccordionNumberMarker>
+                        {index + 1}
+                      </AccordionNumberMarker>
+                    </Box>
+                    <Box ml={6}>
+                      <Typography>
+                        {key['Who']}
+                      </Typography>
+                    </Box>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Box
+                      display="flex"
+                      alignItems="flex-start"
+                      flexDirection="column"
+                    >
+                      <Box
+                        style={{
+                          background: '#eae8e8',
+                          width: '90%',
+                          margin: 'auto',
+                          borderRadius: '4px',
+                          wordWrap: 'break-word',
+                          padding: '8px'
+                        }}
+                      >
+                        {
+                          repLocator.includes(key['Option type'])
+                            ? <RepLocator issue={key} />
+                            : <HTMLRender issue={key} />
+                        }
+                      </Box>
+                      <Box mt={3}>
+                        <Typography align="left" variant="body2">
+                          {key['Why should they help?']}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </AccordionDetails>
+                </Accordion>
+              </Box>
+            ))}
+            <Box
+              display="flex"
+              mb={3}
+            >
+              <UsefulLinkButton>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfH1bgZDIuhGimksQERtdO2L5F-umuWdNIEQQsKtFcLvxmi4Q/viewform"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: '#FFFFFF', textDecoration: 'none' }}
+                  onClick={() => ReactGA.event({
+                    category: 'Option',
+                    action: 'Feedback',
+                    label: 'Open feedback form'
+                  })}
+                >
+                  Was this helpful?
+                </a>
+              </UsefulLinkButton>
+            </Box>
+          </Box>
         </Grid>
       </Grid>
     )
