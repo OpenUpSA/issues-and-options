@@ -61,7 +61,7 @@ class Intro extends React.Component {
               >
                 <Box mb={2}>
                   <Typography align="left" variant="h4">
-                    Have an issue, but not sure who to to talk to?
+                    Have an issue, but not sure who to talk to?
                   </Typography>
                 </Box>
                 <Box mb={2}>
