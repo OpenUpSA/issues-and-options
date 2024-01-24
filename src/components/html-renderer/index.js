@@ -1,7 +1,7 @@
 import { Box, FormControl, Grid, List, ListItem, TextField, Typography } from '@material-ui/core';
 import { Business, Label, Language, LocalPhoneOutlined } from '@material-ui/icons';
 import React, { Component } from 'react';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 
 
 export const onClickReplocatorLink = (issue, link) => (e) => {
