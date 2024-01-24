@@ -1,7 +1,7 @@
 import { Box, Grid, ImageList, Typography } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import React from 'react';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import { BackButton, BasicButton } from '../utils/Buttons';
 
 

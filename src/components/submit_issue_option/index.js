@@ -6,7 +6,7 @@ import ArrowBack from '@material-ui/icons/ArrowBack';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { styled } from '@material-ui/styles';
 import React from 'react';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import data from '../../data/data.json';
 import HTMLRender from '../html-renderer';
 import RepLocator from '../Rep-Locator';

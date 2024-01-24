@@ -1,9 +1,8 @@
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import Index from './components/issues_and_options';
 
 function App() {
-  ReactGA.initialize('UA-47810266-2');
-  ReactGA.pageview(window.location.pathname + window.location.search);
+  ReactGA.initialize('G-2PDS17SPTB');
   return (
     <Index />
   );
